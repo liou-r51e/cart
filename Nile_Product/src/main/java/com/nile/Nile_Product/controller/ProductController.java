@@ -61,13 +61,14 @@ public class ProductController  {
         return new ResponseEntity<List<ProductDTO>>(productDTOS, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/delete/{productId}")
-    public ResponseEntity<ProductDTO> delete(@PathVariable("productId") String productId){
+    @RequestMapping(method = RequestMethod.GET, value = "/delete/{productId}")
+    public void  delete(@PathVariable("productId") String productId){
 
-        ProductEntity productEntity = productService.delete(productId);
-        ProductDTO productDTO = new ProductDTO();
-        BeanUtils.copyProperties(productEntity, productDTO);
-        return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
+         productService.delete(productId);
+       // ProductDTO productDTO = new ProductDTO();
+      //  BeanUtils.copyProperties(productEntity, productDTO);
+       // return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
+        return;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/insert")

@@ -10,6 +10,6 @@ public interface ProductService {
     public List<ProductEntity> findAll();
     public List<ProductEntity> findByCategory(String category);
     public ProductEntity findByProductId(String productId);
-    public ProductEntity delete(String productId);
+    public void delete(String productId);
     public ProductEntity insert();
 }

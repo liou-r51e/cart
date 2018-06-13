@@ -33,14 +33,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductEntity delete(String productId) {
-        return productRepository.deleteById();
+    public void delete(String productId) {
+        productRepository.deleteByProductId (productId);
     }
 
     @Override
     public ProductEntity insert() {
         ProductEntity productEntity = new ProductEntity();
-        productEntity.setProductId("P01");
+        productEntity.setProductId("P04");
         productEntity.setProductName("Item-2");
         productEntity.setCategory("C03");
         productEntity.setSubCategory("c.3");
