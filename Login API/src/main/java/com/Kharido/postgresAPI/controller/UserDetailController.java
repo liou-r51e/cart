@@ -27,16 +27,20 @@ public class UserDetailController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/check")
-    public ResponseEntity<Boolean> checkUser(@RequestBody UserLoginDetails userLoginDetails){
+    public ResponseEntity<String> checkUser(@RequestBody UserLoginDetails userLoginDetails){
         System.out.println("Inside checkUser, userName: " + userLoginDetails.getEmailId() + ", password: " + userLoginDetails.getPassword());
         UserDetailsEntity userLoginDetailEntity = userDetailService.getOneByEmailId(userLoginDetails.getEmailId());
         if (userLoginDetailEntity == null) {
             System.out.println("User Not Found !");
-            return new ResponseEntity<>(false ,HttpStatus.OK);
+            return new ResponseEntity<String>(String.valueOf(false),HttpStatus.OK);
         }
         boolean result = userLoginDetailEntity.getPassword().equals(userLoginDetails.getPassword());
         System.out.println("Password Matched: " + result);
-        return new ResponseEntity<Boolean>(result ,HttpStatus.OK);
+        return new ResponseEntity<String>(String.valueOf(result),HttpStatus.OK);
     }
+
+
+
+
 
 }
