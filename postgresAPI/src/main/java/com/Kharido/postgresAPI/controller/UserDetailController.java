@@ -76,7 +76,7 @@ public class UserDetailController {
         System.out.println(merchantDetail);
 
         Boolean bool;
-        bool = merchantDetailService.exists(merchantDetail.getEmailId());
+        bool = merchantDetailService.exists(merchantDetail.getMerchantId());
         if (bool == true) {
             return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 
@@ -89,8 +89,8 @@ public class UserDetailController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/checkMerchant")
     public ResponseEntity<Boolean> checkMerchant(@RequestBody MerchantLoginDetails merchantLoginDetails) {
-        System.out.println("Inside checkUser, userName: " + merchantLoginDetails.getEmailId() + ", password: " + merchantLoginDetails.getPassword());
-        MerchantDetailsEntity merchantDetailsEntity = merchantDetailService.getOneByEmailId(merchantLoginDetails.getEmailId());
+        System.out.println("Inside checkUser, userName: " + merchantLoginDetails.getMerchantId() + ", password: " + merchantLoginDetails.getPassword());
+        MerchantDetailsEntity merchantDetailsEntity = merchantDetailService.getOneByMerchantId(merchantLoginDetails.getMerchantId());
         if (merchantDetailsEntity == null) {
             System.out.println("User Not Found !");
             return new ResponseEntity<>(false, HttpStatus.OK);
@@ -102,7 +102,7 @@ public class UserDetailController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/getMerchantDetails/{emailId}")
     public ResponseEntity<MerchantDetailsEntity> getOneMerchant(@PathVariable("emailId") String emailId) {
-        MerchantDetailsEntity merchantDetailsEntity = merchantDetailService.getOneByEmailId(emailId);
+        MerchantDetailsEntity merchantDetailsEntity = merchantDetailService.getOneByMerchantId(emailId);
         MerchantDetail merchantDetail = new MerchantDetail();
 //
 //            if (userDetailsEntity.get() == null) {
