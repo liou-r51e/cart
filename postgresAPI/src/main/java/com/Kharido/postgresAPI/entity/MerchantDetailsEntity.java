@@ -11,13 +11,13 @@ import javax.persistence.Table;
 public class MerchantDetailsEntity {
 
     public static final String TABLE_NAME = "merchantDetails";
-    private static final String ID_COLUMN = "emailId";
+    private static final String ID_COLUMN = "merchantId";
 
 
     @Id
     @Column(name = MerchantDetailsEntity.ID_COLUMN)
 
-    private String emailId;
+    private String merchantId;
     private String password;
     private String fullName;
     private String phoneNumber;
@@ -41,12 +41,12 @@ public class MerchantDetailsEntity {
         return ID_COLUMN;
     }
 
-    public String getEmailId() {
-        return emailId;
+    public String getMerchantId() {
+        return merchantId;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public String getPassword() {
@@ -84,7 +84,7 @@ public class MerchantDetailsEntity {
     @Override
     public String toString() {
         return "MerchantDetailsEntity{" +
-                "emailId='" + emailId + '\'' +
+                "merchantId='" + merchantId + '\'' +
                 ", password='" + password + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +

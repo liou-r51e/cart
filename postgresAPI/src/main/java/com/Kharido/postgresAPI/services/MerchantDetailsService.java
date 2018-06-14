@@ -28,7 +28,7 @@ public interface MerchantDetailsService {
 
     public List<MerchantDetailsEntity> getByFirstName(String fullName);
 
-    public MerchantDetailsEntity getOneByEmailId(String emailId);
+    public MerchantDetailsEntity getOneByMerchantId(String merchantId);
 
 
 }
