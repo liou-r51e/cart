@@ -1,4 +1,5 @@
-package com.product.productApi.httpSend;
+/*
+package com.product.productRestApi.httpSend;
 
 
 import java.io.BufferedReader;
@@ -99,3 +100,4 @@ public class HttpURLConnectionExample<R,T>{
     }
 
 }
+*/

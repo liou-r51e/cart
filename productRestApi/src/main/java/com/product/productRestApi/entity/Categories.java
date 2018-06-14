@@ -1,9 +1,18 @@
-package com.product.productApi.entity;
+package com.product.productRestApi.entity;
 
-public enum Categories {
+import java.util.HashMap;
 
-    ELECTRONICS,
-    MEN,
-    WOMEN,
-    HEALTH
+public class Categories {
+
+    public static String[] categories;
+    public static String[] Electronics;
+
+    public Categories(){
+        categories = new String[]{"Electronics",};
+
+
+
+
+    }
+
 }

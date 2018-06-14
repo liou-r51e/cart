@@ -6,7 +6,8 @@ import java.util.Map;
 
 public class ProductDetailEntity {
 
-    private String productId;
+
+    private int productId;
     private String productName;
     private String category;
     private String subCategory;
@@ -22,11 +23,11 @@ public class ProductDetailEntity {
         this.subCategory = subCategory;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
