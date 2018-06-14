@@ -9,10 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +33,33 @@ public class ProductController  {
         }
         return new ResponseEntity<List<ProductDTO>>(productDTOS, HttpStatus.OK);
     }
+    @RequestMapping(method = RequestMethod.GET, value = "/getProductsBySubCategory/{subCategory}")
+    public ResponseEntity<List<ProductDTO>> getProductsBySubCategory(@PathVariable("subCategory") String subCategory){
+
+        List<ProductEntity> productEntityList = productService.findBySubCategory(subCategory);
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for (ProductEntity productEntity : productEntityList) {
+            ProductDTO productDTO = new ProductDTO();
+            BeanUtils.copyProperties(productEntity, productDTO);
+            productDTOS.add(productDTO);
+        }
+        return new ResponseEntity<List<ProductDTO>>(productDTOS, HttpStatus.OK);
+    }
+    @RequestMapping(method = RequestMethod.GET, value = "/getProductsByProductName/{productname}")
+    public ResponseEntity<List<ProductDTO>> getProductsByProductName(@PathVariable("productname") String productName){
+
+        List<ProductEntity> productEntityList = productService.findProductsByProductName (productName);
+        List<ProductDTO> productDTOS = new ArrayList<>();
+        for (ProductEntity productEntity : productEntityList) {
+            ProductDTO productDTO = new ProductDTO();
+            BeanUtils.copyProperties(productEntity, productDTO);
+            productDTOS.add(productDTO);
+        }
+        return new ResponseEntity<List<ProductDTO>>(productDTOS, HttpStatus.OK);
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getProductDetailsById/{productId}")
-    public ResponseEntity<?> getProductDetailsById(@PathVariable("productId") String productId){
+    public ResponseEntity<?> getProductDetailsById(@PathVariable("productId") int productId){
         ProductEntity productEntity = productService.findByProductId(productId);
         if(productEntity == null){
             return new ResponseEntity<String>("No data found", HttpStatus.OK);
@@ -62,21 +83,19 @@ public class ProductController  {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/delete/{productId}")
-    public void  delete(@PathVariable("productId") String productId){
+    public void  delete(@PathVariable("productId") int productId){
 
          productService.delete(productId);
-       // ProductDTO productDTO = new ProductDTO();
-      //  BeanUtils.copyProperties(productEntity, productDTO);
-       // return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
         return;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/insert")
-    public ResponseEntity<ProductDTO> insert(){
+    public ResponseEntity<ProductDTO> insert(@RequestBody ProductDTO productDTO){
 
-        ProductEntity productEntity = productService.insert();
-        ProductDTO productDTO = new ProductDTO();
-        BeanUtils.copyProperties(productEntity, productDTO);
+        ProductEntity productEntity = new ProductEntity ();
+        BeanUtils.copyProperties(productDTO, productEntity);
+        productService.insert (productEntity);
         return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
     }
+
 }

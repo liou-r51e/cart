@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ProductDTO {
 
-    private String productId;
+    private int productId;
     private String productName;
     private String category;
     private String subCategory;
@@ -21,11 +21,11 @@ public class ProductDTO {
         this.subCategory = subCategory;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

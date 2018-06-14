@@ -9,7 +9,10 @@ public interface ProductService {
 
     public List<ProductEntity> findAll();
     public List<ProductEntity> findByCategory(String category);
-    public ProductEntity findByProductId(String productId);
-    public void delete(String productId);
-    public ProductEntity insert();
+    public List<ProductEntity> findBySubCategory(String subCategory);
+    public List<ProductEntity> findProductsByProductName(String productName);
+    public ProductEntity findByProductId(int productId);
+    public void delete(int productId);
+    public ProductEntity insert(ProductEntity productEntity);
+   // public ProductEntity insertOrUpdate(ProductEntity productEntity);
 }

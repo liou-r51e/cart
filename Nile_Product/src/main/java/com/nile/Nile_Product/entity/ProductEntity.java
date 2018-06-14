@@ -12,7 +12,7 @@ public class ProductEntity {
     public static final String COLLECTION_NAME = "product";
 
     @Id
-    private String productId;
+    private int productId;
     private String productName;
     private String category;
     private  String subCategory;
@@ -36,11 +36,11 @@ public class ProductEntity {
         this.attribute = attribute;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 

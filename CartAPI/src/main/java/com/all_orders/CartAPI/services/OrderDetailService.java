@@ -31,4 +31,17 @@ public interface OrderDetailService {
 
     public OrderDetailEntity getOneByEmailId(String firstName);
 
+    public boolean updateQuantity(int sessionId,int quantity);
+
+    public boolean updateCost(int sessionId,int quantity);
+
+    public boolean updateStatus(int sessionId,String status);
+
+    public double getCost(String sessionId);
+
+    public String getStatus(String sessionId);
+
+    public int getQuantity(String sessionID);
+
+
 }
