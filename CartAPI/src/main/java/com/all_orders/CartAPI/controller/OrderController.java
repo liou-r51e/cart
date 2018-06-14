@@ -70,9 +70,9 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "get/cost/{sessionId}")
-    public ResponseEntity<Double> getCost(@PathVariable("sessionId") String sessionId) {
-        double cost = orderDetailService.getCost(sessionId);
-        return new ResponseEntity<Double>(cost, HttpStatus.OK);
+    public ResponseEntity<Integer> getCost(@PathVariable("sessionId") String sessionId) {
+        int cost = orderDetailService.getCost(sessionId);
+        return new ResponseEntity<Integer>(cost, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "get/status/{sessionId}")
