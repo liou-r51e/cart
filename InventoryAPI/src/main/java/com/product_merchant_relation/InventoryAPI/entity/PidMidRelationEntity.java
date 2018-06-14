@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Table(name = PidMidRelationEntity.TABLE_NAME)
 public class PidMidRelationEntity {
 
-    public static final String TABLE_NAME = "allOrders";
+    public static final String TABLE_NAME = "pidMidRelation";
     public static final String ID_COLUMN = "pmId";
 
 
@@ -18,7 +18,7 @@ public class PidMidRelationEntity {
     @Column(name = PidMidRelationEntity.ID_COLUMN)
     private String pmId;
     private int productId;
-    private int sessionId;
+    private String merchantId;
     private int cost;
     private int inventory;
 
@@ -47,12 +47,12 @@ public class PidMidRelationEntity {
         this.productId = productId;
     }
 
-    public int getSessionId() {
-        return sessionId;
+    public String getMerchantId() {
+        return merchantId;
     }
 
-    public void setSessionId(int sessionId) {
-        this.sessionId = sessionId;
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public int getCost() {

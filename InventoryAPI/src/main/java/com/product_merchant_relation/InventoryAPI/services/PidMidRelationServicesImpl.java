@@ -42,8 +42,9 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
 
     @Override
     public boolean addInventory(PidMidRelationEntity pidMidRelationEntity) {
+        PidMidRelationEntity pidMidRelationEntityNew = pidMidRelationRepository.save(pidMidRelationEntity);
 
-        return pidMidRelationEntity.equals(pidMidRelationRepository.save(pidMidRelationEntity));
+        return pidMidRelationEntity.equals(pidMidRelationEntityNew);
     }
 
     @Override

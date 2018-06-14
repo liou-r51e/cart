@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PidMidRelationRepository extends CrudRepository<PidMidRelationEntity,String> {
 
-    public PidMidRelationEntity save(PidMidRelationEntity pidMidRelationEntity);
+    //public PidMidRelationEntity save(PidMidRelationEntity pidMidRelationEntity);
     public void deleteByPmId(String pmId);
 
 
