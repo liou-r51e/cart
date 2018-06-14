@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/pid_mid/")
 public class Controller {
@@ -51,6 +53,12 @@ public class Controller {
     public ResponseEntity<PidMidRelationEntity> getPidMidRelation(@PathVariable("pmId")String pmId){
         PidMidRelationEntity pidMidRelationEntity = pidMidRelationServices.getPidMidRelation(pmId);
         return new ResponseEntity<PidMidRelationEntity>(pidMidRelationEntity,HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "getAll")
+    public ResponseEntity<List<PidMidRelationEntity>> getPidMidRelation(){
+        List<PidMidRelationEntity> pidMidRelationEntity = pidMidRelationServices.getAll();
+        return new ResponseEntity<List<PidMidRelationEntity>>(pidMidRelationEntity,HttpStatus.OK);
     }
 
 }

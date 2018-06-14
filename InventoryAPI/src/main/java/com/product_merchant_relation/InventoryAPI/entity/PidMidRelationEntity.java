@@ -5,6 +5,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = PidMidRelationEntity.TABLE_NAME)
@@ -69,5 +70,22 @@ public class PidMidRelationEntity {
 
     public void setInventory(int inventory) {
         this.inventory = inventory;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PidMidRelationEntity that = (PidMidRelationEntity) o;
+        return productId == that.productId &&
+                cost == that.cost &&
+                inventory == that.inventory &&
+                Objects.equals(merchantId, that.merchantId);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(productId, merchantId, cost, inventory);
     }
 }

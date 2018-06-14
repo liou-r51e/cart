@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
-@Transactional(readOnly = true, propagation = Propagation.REQUIRES_NEW)
+@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 public class PidMidRelationServicesImpl implements PidMidRelationServices {
 
     @Autowired
@@ -48,14 +50,22 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getInventory(String pmId) {
         PidMidRelationEntity pidMidRelationEntity = pidMidRelationRepository.findById(pmId).get();
         return pidMidRelationEntity.getInventory();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PidMidRelationEntity getPidMidRelation(String pmId) {
 
         return pidMidRelationRepository.findById(pmId).get();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<PidMidRelationEntity> getAll() {
+        return (List)pidMidRelationRepository.findAll();
     }
 }
