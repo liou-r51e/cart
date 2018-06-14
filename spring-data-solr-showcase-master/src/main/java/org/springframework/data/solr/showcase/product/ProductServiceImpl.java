@@ -67,8 +67,18 @@ class ProductServiceImpl implements ProductService {
 
 		return productRepository.findByNameIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);
 	}
+	@Override
+	public Page<Product> findById(String searchTerm, Pageable pageable) {
+		if (StringUtils.isBlank(searchTerm)) {
+			return productRepository.findAll(pageable);
+		}
 
-//	@Override
+		return productRepository.findByIdIn(splitSearchTermAndRemoveIgnoredCharacters(searchTerm), pageable);
+
+	}
+
+
+
 
 	public List<Product> search(String searchTerm) {
 		String[] words = searchTerm.split(" ");
@@ -80,9 +90,8 @@ class ProductServiceImpl implements ProductService {
 		return results.getContent();
 	}
 
-//	public List<Product> fullSearch(String searchTerm) {
-//		return productRepository.search(searchTerm);
-//	}
+
+
 
 
 	private Collection<String> splitSearchTermAndRemoveIgnoredCharacters(String searchTerm) {

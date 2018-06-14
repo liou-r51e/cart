@@ -10,6 +10,8 @@ import java.util.List;
 public interface ProductRepository extends MongoRepository<ProductEntity , String> {
 
     public List<ProductEntity> findByCategory(String category);
-    public ProductEntity findByProductId(String productId);
-    public void deleteByProductId(String productId);
+    public List<ProductEntity> findBySubCategory(String subCategory);
+    public ProductEntity findByProductId(int productId);
+    public void deleteByProductId(int productId);
+    public List<ProductEntity> findProductsByProductName(String productName);
 }

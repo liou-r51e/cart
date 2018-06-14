@@ -30,5 +30,8 @@ public interface ProductService {
 
 	Page<Product> findByName(String searchTerm, Pageable pageable);
 	List<Product> search(String searchTerm);
+	Page<Product> findById(String searchTerm, Pageable pageable);
+
+
 
 }

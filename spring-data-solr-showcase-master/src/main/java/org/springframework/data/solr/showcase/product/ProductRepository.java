@@ -38,7 +38,6 @@ interface ProductRepository extends SolrCrudRepository<Product, String> {
 			SearchableProductDefinition.PRICE_FIELD_NAME, SearchableProductDefinition.FEATURES_FIELD_NAME,
 			SearchableProductDefinition.AVAILABLE_FIELD_NAME }, defaultOperator = Operator.AND)
 	HighlightPage<Product> findByNameIn(Collection<String> names, Pageable page);
-	//List<Product> search(String searchTerm);
-
+	HighlightPage<Product> findByIdIn(Collection<String> names, Pageable page);
 
 }

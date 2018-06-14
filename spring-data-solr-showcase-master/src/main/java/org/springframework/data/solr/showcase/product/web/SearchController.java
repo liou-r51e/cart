@@ -27,7 +27,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -40,13 +39,19 @@ public class SearchController {
 	@RequestMapping("/search/{q}")
 	public List<Product> search(Model model, @PathVariable(value = "q") String query, @PageableDefault(
 			page = 0, size = ProductService.DEFAULT_PAGE_SIZE) Pageable pageable, HttpServletRequest request) {
-		List<Product> products = new ArrayList<>();
-		//products = productService.search(query);
-		productService.findByName(query, pageable)
-				.forEach(products::add);
+		List<Product> products = new ArrayList<> ();
+		 productService.findByName ( query,pageable )
+                 .forEach ( products::add );
 		return products;
 	}
-
+    @RequestMapping("/searchn/{q}")
+    public List<Product> searcha(Model model, @PathVariable(value = "q") String query, @PageableDefault(
+            page = 0, size = ProductService.DEFAULT_PAGE_SIZE) Pageable pageable, HttpServletRequest request) {
+        List<Product> products = new ArrayList<> ();
+        productService.findById ( query,pageable )
+                .forEach ( products::add );
+        return products;
+    }
 
 
 	@Autowired

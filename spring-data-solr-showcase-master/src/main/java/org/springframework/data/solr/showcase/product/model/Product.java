@@ -24,7 +24,7 @@ import org.springframework.data.solr.core.mapping.SolrDocument;
 import org.springframework.data.solr.showcase.product.SearchableProductDefinition;
 
 
-@SolrDocument(solrCoreName = "collection1")
+@SolrDocument(solrCoreName = "techproducts")
 public class Product implements SearchableProductDefinition {
 
 	private @Id @Indexed String id;
