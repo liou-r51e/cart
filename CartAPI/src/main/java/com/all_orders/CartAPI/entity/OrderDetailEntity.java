@@ -20,7 +20,7 @@ import javax.persistence.Table;
         private String emailId;
         private int productId;
         private String merchantId;
-        private double cost;
+        private int cost;
         private int quantity;
         private String status;
 
@@ -77,11 +77,11 @@ import javax.persistence.Table;
             this.merchantId = merchantId;
         }
 
-        public double getCost() {
+        public int getCost() {
             return cost;
         }
 
-        public void setCost(double cost) {
+        public void setCost(int cost) {
             this.cost = cost;
         }
 
