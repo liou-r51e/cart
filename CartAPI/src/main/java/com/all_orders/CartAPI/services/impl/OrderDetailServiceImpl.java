@@ -78,4 +78,50 @@ OrderRepository orderRepository;
     public OrderDetailEntity getOneByEmailId(String firstName) {
         return null;
     }
+
+    @Override
+    public boolean updateQuantity(int sessionId,int quantity)
+    {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
+        orderDetailEntity.setQuantity(quantity);
+        orderRepository.deleteById(String.valueOf(sessionId));
+        return orderDetailEntity.equals(orderRepository.save(orderDetailEntity));
+    }
+
+    @Override
+    public boolean updateCost(int sessionId,int cost)
+    {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
+        orderDetailEntity.setCost(cost);
+        orderRepository.deleteById(String.valueOf(sessionId));
+        return orderDetailEntity.equals(orderRepository.save(orderDetailEntity));
+    }
+
+    @Override
+    public boolean updateStatus(int sessionId, String status) {
+
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
+        orderDetailEntity.setStatus(status);
+        orderRepository.deleteById(String.valueOf(sessionId));
+        return orderDetailEntity.equals(orderRepository.save(orderDetailEntity));
+
+    }
+
+    @Override
+    public double getCost(String sessionId) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
+        return orderDetailEntity.getCost();
+    }
+
+    @Override
+    public String getStatus(String sessionId) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
+        return orderDetailEntity.getStatus();
+    }
+
+    @Override
+    public int getQuantity(String sessionId) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
+        return orderDetailEntity.getQuantity();
+    }
 }
