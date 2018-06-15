@@ -1,5 +1,6 @@
 package com.ayu.Product.service.impl;
 
+import com.ayu.Product.dto.ProductDTO;
 import com.ayu.Product.repository.ProductRepository;
 import com.ayu.Product.entity.ProductEntity;
 import com.ayu.Product.service.ProductService;
@@ -14,6 +15,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductRepository productRepository;
+    int count = 0;
+
+    private int getCount(){
+        if(count==0){
+            count = productRepository.findAll ().size ();
+        }
+        return count;
+    }
+
 
     @Override
     public List<ProductEntity> findAll() {
@@ -48,6 +58,9 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity insert(ProductEntity productEntity) {
 
+       // List<ProductEntity> productDTOS = productRepository.findAll ();
+        productEntity.setProductId (getCount () +1);
+        count++;
         return  productRepository.insert(productEntity);
     }
 
