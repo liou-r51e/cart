@@ -7,13 +7,19 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
-public class HttpURLConnectionExample{
+public class HttpURLConnectionExample<R,T>{
+
+
+    //public R get(String )
+
+    ObjectMapper objectMapper = new ObjectMapper();
 
     // HTTP GET request
-    public static String sendGet(String url) throws Exception {
+    public R sendGet(String url, Class<R> rClass) throws Exception {
 
         //String url = "http://www.google.com/search?q=mkyong";
 
@@ -42,13 +48,13 @@ public class HttpURLConnectionExample{
 
         //print result
         //System.out.println(response.toString());
-        //R responseObject = objectMapper.readValue(response.toString(),rClass.getClass());
-        return response.toString();
+        R responseObject = objectMapper.readValue(response.toString(),rClass);
+        return responseObject;
 
     }
 
     // HTTP POST request
-    public static String sendPost(String url,String urlParameters) throws Exception {
+    private R sendPost(String url, Class<R> rClass, T tClass) throws Exception {
 
         //String url = "https://selfsolve.apple.com/wcResults.do";
         URL obj = new URL(url);
@@ -65,7 +71,7 @@ public class HttpURLConnectionExample{
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 
-        //String urlParameters = objectMapper.writeValueAsString(tClass);
+        String urlParameters = objectMapper.writeValueAsString(tClass);
         wr.writeBytes(urlParameters);
         wr.flush();
         wr.close();
@@ -86,11 +92,11 @@ public class HttpURLConnectionExample{
         in.close();
 
 
-        //R responseObject = objectMapper.readValue(response.toString(),rClass);
+        R responseObject = objectMapper.readValue(response.toString(),rClass);
 
         //print result
         //System.out.println(response.toString());
-        return response.toString();//Object;
+        return responseObject;
     }
 
 }
