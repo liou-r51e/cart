@@ -33,5 +33,7 @@ public interface UserDetailsService {
 
     public String userLogin(UserLoginDetails userDetail);
 
+    public int emailValidation(String emailId);
+
     //public List<UserLoginDetailEntity> getByFirstNameAndLastName(String firstName, String lastName);
 }

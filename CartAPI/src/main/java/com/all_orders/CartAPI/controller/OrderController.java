@@ -22,7 +22,7 @@ public class OrderController {
     OrderDetailServiceImpl orderDetailService;
 
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getAll")
+    @RequestMapping(method = RequestMethod.GET, value = "getAll")
     public ResponseEntity<List<OrderDetail>> getAllEmployees() {
         List<OrderDetailEntity> orderDetailEntityList = orderDetailService.findAll();
         List<OrderDetail> orders = new ArrayList<>();
@@ -44,12 +44,13 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "add")
-    public ResponseEntity<String> addOrUpdateEmployee(@RequestBody OrderDetail orderDetail) {
+    public ResponseEntity<OrderDetail> addOrUpdateEmployee(@RequestBody OrderDetail orderDetail) {
         System.out.println(orderDetail);
 
         OrderDetail orderDetail1 = orderDetailService.save(orderDetail);
-        return new ResponseEntity<String>(orderDetail1.getSessionId(), HttpStatus.OK);
+        return new ResponseEntity<OrderDetail>(orderDetail1, HttpStatus.OK);
     }
+
 
     @RequestMapping(method = RequestMethod.GET, value = "update/quantity/{sessionID}/{quantity}")
     public ResponseEntity<Boolean> updateQuantity(@PathVariable("sessionID") int sessionId, @PathVariable("quantity") int quantity) {
@@ -70,22 +71,33 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "get/cost/{sessionId}")
-    public ResponseEntity<Integer> getCost(@PathVariable("sessionId") String sessionId) {
+    public ResponseEntity<Integer> getCost(@PathVariable("sessionId") int sessionId) {
         int cost = orderDetailService.getCost(sessionId);
         return new ResponseEntity<Integer>(cost, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "get/status/{sessionId}")
-    public ResponseEntity<String> getSession(@PathVariable("sessionId") String sessionId) {
+    public ResponseEntity<String> getSession(@PathVariable("sessionId") int sessionId) {
         String status = orderDetailService.getStatus(sessionId);
         return new ResponseEntity<String>(status, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "get/quantity/{sessionId}")
-    public ResponseEntity<Integer> getQuantity(@PathVariable("sessionId") String sessionId) {
+    public ResponseEntity<Integer> getQuantity(@PathVariable("sessionId") int sessionId) {
         int quantity = orderDetailService.getQuantity(sessionId);
         return new ResponseEntity<Integer>(quantity, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET,value = "get/pastOrders/{emailId}/{status}")
+    public ResponseEntity<List<OrderDetail>> getPastOrders(@PathVariable("emailId") String emailId,@PathVariable("status") String status){
+        List<OrderDetailEntity> pastOrderList = orderDetailService.getByEmailIdAndStatus(emailId,status);
+        List<OrderDetail> orders = new ArrayList<>();
+        for (OrderDetailEntity orderDetailEntity : pastOrderList) {
+            OrderDetail orderDetail = new OrderDetail();
+            BeanUtils.copyProperties(orderDetailEntity, orderDetail);
+            orders.add(orderDetail);
+        }
+        return new ResponseEntity<List<OrderDetail>>(orders, HttpStatus.OK);
+    }
 
 }

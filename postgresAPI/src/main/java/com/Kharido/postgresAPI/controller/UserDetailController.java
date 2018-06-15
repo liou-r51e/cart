@@ -20,10 +20,11 @@ import java.util.Optional;
 //Todo : Phani : URL mapping avoid _
 @RequestMapping("/userGateway")
 public class UserDetailController {
+    private int otp;
+    UserDetail userDetail;
 
     @Autowired
     UserDetailServiceImpl userDetailService;
-
 
 
     @RequestMapping(method = RequestMethod.POST, value = "/register")
@@ -37,10 +38,23 @@ public class UserDetailController {
             return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 
         }
-        UserDetail userDetail1 = userDetailService.save(userDetail);
+        otp = userDetailService.emailValidation(userDetail.getEmailId());
+        this.userDetail=userDetail;
+
+        // UserDetail userDetail1 = userDetailService.save(userDetail);
         //Todo : Phani : why is the boolean check required ? you can always return true in this case
 
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/register/otp")
+    public ResponseEntity<Boolean> OTP(@RequestBody int otp) {
+        if (otp == this.otp) {
+            UserDetail userDetail1 = userDetailService.save(userDetail);
+            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<Boolean>(false, HttpStatus.OK);
+
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/login")
@@ -50,9 +64,9 @@ public class UserDetailController {
         //Todo : Phani : should not pass entity to controller in this case!!
 
 
-       String response =  userDetailService.userLogin(userLoginDetails);
+        String response = userDetailService.userLogin(userLoginDetails);
         System.out.println(response);
-return new ResponseEntity<String>(response, HttpStatus.OK);
+        return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getUserDetails/{emailId}")
