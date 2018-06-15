@@ -3,6 +3,7 @@ package com.Kharido.postgresAPI.dto;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 public class UserLoginDetails {
 
@@ -25,12 +26,9 @@ public class UserLoginDetails {
         this.emailId = emailId;
     }
 
+    //Todo : Phani : keep only one level hashing, not in get and set
     public String getPassword() {
-        final String hashed = Hashing.sha256()
-                .hashString(password, StandardCharsets.UTF_8)
-                .toString();
-
-        return hashed;
+return password;
     }
 
     public void setPassword(String password) {

@@ -11,10 +11,8 @@ public class UserDetailsEntity {
     public static final String TABLE_NAME = "userDetails";
     private static final String ID_COLUMN = "emailId";
 
-
     @Id
     @Column(name = UserDetailsEntity.ID_COLUMN)
-
     private String emailId;
     private String password;
     private String fullName;

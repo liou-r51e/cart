@@ -2,9 +2,8 @@ package com.Kharido.postgresAPI.services.impl;
 
 import com.Kharido.postgresAPI.dto.MerchantDetail;
 
-import com.Kharido.postgresAPI.dto.UserDetail;
+import com.Kharido.postgresAPI.dto.MerchantLoginDetails;
 import com.Kharido.postgresAPI.entity.MerchantDetailsEntity;
-import com.Kharido.postgresAPI.entity.UserDetailsEntity;
 import com.Kharido.postgresAPI.repository.MerchantDetailsRepository;
 import com.Kharido.postgresAPI.services.MerchantDetailsService;
 import org.springframework.beans.BeanUtils;
@@ -12,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MerchantDetailServiceImpl implements MerchantDetailsService {
@@ -20,8 +20,8 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
     MerchantDetailsRepository merchantDetailsRepository;
 
     @Override
-    public MerchantDetailsEntity findOne(String emailId) {
-        return (merchantDetailsRepository.findOneByMerchantId(emailId));
+    public Optional<MerchantDetailsEntity> findOne(String emailId) {
+        return (merchantDetailsRepository.findById(emailId));
     }
 
     @Override
@@ -77,7 +77,31 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
 
     @Override
     public MerchantDetailsEntity getOneByMerchantId(String merchantId) {
-        MerchantDetailsEntity merchantDetailsEntity = merchantDetailsRepository.findOneByMerchantId(merchantId);
+        MerchantDetailsEntity merchantDetailsEntity = merchantDetailsRepository.findById(merchantId).get();
         return merchantDetailsEntity;
     }
+
+    @Override
+    public String merchantLogin(MerchantLoginDetails merchantLoginDetails) {
+        if(merchantDetailsRepository.existsById(merchantLoginDetails.getMerchantId())==false){
+
+            return ("Email is not registered...");
+        }
+
+        MerchantDetailsEntity merchantDetailsEntity = merchantDetailsRepository.findById(merchantLoginDetails.getMerchantId()).get();
+        if (merchantDetailsEntity == null) {
+            //Todo : Phani : remove system.out.println, use logger instead
+            System.out.println("User Not Found...");
+            return ("Email is not registered...");
+        }
+        boolean merchantPassWordCheck = merchantDetailsEntity.getPassword().equals(merchantLoginDetails.getPassword());
+        if(merchantPassWordCheck == false)
+        {
+            return ("Username/Password incorrect...");
+        }
+        return ("true");
+
+    }
+
+
 }
