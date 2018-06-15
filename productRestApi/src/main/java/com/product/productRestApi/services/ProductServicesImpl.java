@@ -1,18 +1,15 @@
 package com.product.productRestApi.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.product.productRestApi.dtos.ProductDetailsDto;
-import com.product.productRestApi.dtos.ProductSummaryDto;
-import com.product.productRestApi.entity.Categories;
+import com.product.productRestApi.entity.AllNames;
 import com.product.productRestApi.entity.ProductDetailEntity;
 import com.product.productRestApi.httpSend.HttpURLConnectionExample;
-import jdk.internal.org.objectweb.asm.TypeReference;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -36,29 +33,25 @@ public class ProductServicesImpl implements ProductServices{
 
     JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class,ProductDetailEntity.class);
 
+
+
     @Override
-    public Categories[] getCategories() {
-        //List<Categories> lc = Categories.values();
-        return null;
+    public List<String> getCategories() {
+        return Arrays.asList(AllNames.categories);
     }
 
     @Override
-    public List<ProductDetailEntity> getProducts() {
-        return null;
+    public List<String> getSubcategories(String category) {
+        return Arrays.asList(AllNames.subCategories.get(category));
     }
 
     @Override
-    public List<ProductDetailEntity> getProducts(Categories categories) {
-        return null;
-    }
-
-    @Override
-    public List<ProductDetailEntity> getProducts(String subcategory, int type) {
-        if(type==0) {//category
+    public List<ProductDetailEntity> getProducts(String name, int type) {
+        if(type==0) {//get all products by category
             List<ProductDetailEntity> productDetailEntities=null;
             String responseUrl = null;
             try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductByCategory/"+subcategory);
+                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductByCategory/"+ name);
 
                 productDetailEntities = objectMapper.readValue(responseUrl,listtype);
             } catch (Exception e) {
@@ -66,11 +59,11 @@ public class ProductServicesImpl implements ProductServices{
             }
             return productDetailEntities;
         }
-        else if(type==1) {//category
+        else if(type==1) {//get all products by suCategory
             List<ProductDetailEntity> productDetailEntities=null;
             String responseUrl = null;
             try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductBySubCategory/"+subcategory);
+                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductBySubCategory/"+name);
 
                 productDetailEntities = objectMapper.readValue(responseUrl,listtype);
             } catch (Exception e) {
@@ -114,5 +107,33 @@ public class ProductServicesImpl implements ProductServices{
             }
             return productDetailEntities;
 
+    }
+
+    @Override
+    public ProductDetailEntity addProduct(ProductDetailEntity productDetailEntity) {
+        ProductDetailEntity productDetailEntitynew = null;
+        String responseUrl = null;
+
+        try {
+            String urlParameters = objectMapper.writeValueAsString(productDetailEntity);
+            responseUrl = HttpURLConnectionExample.sendPost(IP+"insert",urlParameters);
+            productDetailEntitynew = objectMapper.readValue(responseUrl,listtype);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return productDetailEntitynew;
+    }
+
+    @Override
+    public boolean deleteByProductId(int productId) {
+        try {
+            HttpURLConnectionExample.sendGet(IP+"delete/"+String.valueOf(productId));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 }

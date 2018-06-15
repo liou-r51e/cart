@@ -2,9 +2,6 @@ package com.product.productRestApi.dtos;
 
 public class MerchantDetailsDto {
 
-
-
-
     // private  String userId;
     private  String merchantId;
     private  String fullName;
