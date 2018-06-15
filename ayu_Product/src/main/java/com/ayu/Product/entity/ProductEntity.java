@@ -75,4 +75,17 @@ public class ProductEntity {
     public void setImages(List<String> images) {
         this.images = images;
     }
+
+    @Override
+    public String toString() {
+        return "ProductEntity{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", category='" + category + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", discription='" + discription + '\'' +
+                ", attribute=" + attribute +
+                ", images=" + images +
+                '}';
+    }
 }

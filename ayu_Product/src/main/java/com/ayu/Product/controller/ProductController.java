@@ -92,8 +92,10 @@ public class ProductController  {
 
         ProductEntity productEntity = new ProductEntity ();
         BeanUtils.copyProperties(productDTO, productEntity);
-        productService.insert (productEntity);
+        productEntity = productService.insert (productEntity);
+        BeanUtils.copyProperties ( productEntity,productDTO );
         return new ResponseEntity<ProductDTO>(productDTO, HttpStatus.OK);
+
     }
 
 }
