@@ -37,7 +37,7 @@ public interface OrderDetailService {
 
     public boolean updateStatus(int sessionId,String status);
 
-    public double getCost(String sessionId);
+    public int getCost(String sessionId);
 
     public String getStatus(String sessionId);
 

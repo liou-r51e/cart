@@ -108,7 +108,7 @@ OrderRepository orderRepository;
     }
 
     @Override
-    public double getCost(String sessionId) {
+    public int getCost(String sessionId) {
         OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
         return orderDetailEntity.getCost();
     }

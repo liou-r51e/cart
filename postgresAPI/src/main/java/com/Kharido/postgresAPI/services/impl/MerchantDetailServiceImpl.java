@@ -21,7 +21,7 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
 
     @Override
     public MerchantDetailsEntity findOne(String emailId) {
-        return (merchantDetailsRepository.findOneByEmailId(emailId));
+        return (merchantDetailsRepository.findOneByMerchantId(emailId));
     }
 
     @Override
@@ -29,15 +29,15 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
         MerchantDetailsEntity merchantDetailsEntity = new MerchantDetailsEntity();
         BeanUtils.copyProperties(merchantDetail, merchantDetailsEntity);
         merchantDetailsRepository.save(merchantDetailsEntity);
-        System.out.println(merchantDetailsEntity.getEmailId());
+        System.out.println(merchantDetailsEntity.getMerchantId());
         MerchantDetail response = new MerchantDetail();
         BeanUtils.copyProperties(merchantDetailsEntity, response);
         return response;
     }
 
     @Override
-    public boolean exists(String emailId) {
-        return merchantDetailsRepository.existsById(emailId);
+    public boolean exists(String merchantId) {
+        return merchantDetailsRepository.existsById(merchantId);
     }
 
     @Override
@@ -76,8 +76,8 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
     }
 
     @Override
-    public MerchantDetailsEntity getOneByEmailId(String emailId) {
-        MerchantDetailsEntity merchantDetailsEntity = merchantDetailsRepository.findOneByEmailId(emailId);
+    public MerchantDetailsEntity getOneByMerchantId(String merchantId) {
+        MerchantDetailsEntity merchantDetailsEntity = merchantDetailsRepository.findOneByMerchantId(merchantId);
         return merchantDetailsEntity;
     }
 }
