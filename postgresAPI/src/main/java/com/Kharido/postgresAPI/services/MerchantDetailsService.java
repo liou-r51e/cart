@@ -1,14 +1,14 @@
 package com.Kharido.postgresAPI.services;
 
 import com.Kharido.postgresAPI.dto.MerchantDetail;
-import com.Kharido.postgresAPI.dto.UserDetail;
+import com.Kharido.postgresAPI.dto.MerchantLoginDetails;
 import com.Kharido.postgresAPI.entity.MerchantDetailsEntity;
-import com.Kharido.postgresAPI.entity.UserDetailsEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MerchantDetailsService {
-    public MerchantDetailsEntity findOne(String userId);
+    public Optional<MerchantDetailsEntity> findOne(String userId);
 
     public MerchantDetail save(MerchantDetail merchantDetail);
 
@@ -28,7 +28,9 @@ public interface MerchantDetailsService {
 
     public List<MerchantDetailsEntity> getByFirstName(String fullName);
 
-    public MerchantDetailsEntity getOneByEmailId(String emailId);
+    public MerchantDetailsEntity getOneByMerchantId(String merchantId);
+
+    public String merchantLogin(MerchantLoginDetails merchantLoginDetails);
 
 
 }

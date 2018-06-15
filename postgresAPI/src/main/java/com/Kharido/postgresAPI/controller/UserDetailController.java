@@ -17,49 +17,49 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/login_Signup")
+//Todo : Phani : URL mapping avoid _
+@RequestMapping("/userGateway")
 public class UserDetailController {
 
     @Autowired
     UserDetailServiceImpl userDetailService;
 
-    @Autowired
-    MerchantDetailServiceImpl merchantDetailService;
 
 
-    @RequestMapping(method = RequestMethod.POST, value = "/add")
+    @RequestMapping(method = RequestMethod.POST, value = "/register")
     public ResponseEntity<Boolean> addOrUpdateUser(@RequestBody UserDetail userDetail) {
         System.out.println(userDetail);
 
-        Boolean bool;
-        bool = userDetailService.exists(userDetail.getEmailId());
-        if (bool == true) {
+        //Todo : Phani : what does bool mean in the current code context?
+        Boolean existingUser;
+        existingUser = userDetailService.exists(userDetail.getEmailId());
+        if (existingUser == true) {
             return new ResponseEntity<Boolean>(false, HttpStatus.OK);
 
         }
         UserDetail userDetail1 = userDetailService.save(userDetail);
-        bool = userDetail.getFullName().equals(userDetail1.getFullName());
+        //Todo : Phani : why is the boolean check required ? you can always return true in this case
 
-        return new ResponseEntity<Boolean>(bool, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/check")
-    public ResponseEntity<Boolean> checkUser(@RequestBody UserLoginDetails userLoginDetails) {
+    @RequestMapping(method = RequestMethod.POST, value = "/login")
+    public ResponseEntity<String> checkUser(@RequestBody UserLoginDetails userLoginDetails) {
+        //Todo : Phani : remove system.out.println, user logger instead
         System.out.println("Inside checkUser, userName: " + userLoginDetails.getEmailId() + ", password: " + userLoginDetails.getPassword());
-        UserDetailsEntity userLoginDetailEntity = userDetailService.getOneByEmailId(userLoginDetails.getEmailId());
-        if (userLoginDetailEntity == null) {
-            System.out.println("User Not Found !");
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
-        boolean result = userLoginDetailEntity.getPassword().equals(userLoginDetails.getPassword());
-        System.out.println("Password Matched: " + result);
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
+        //Todo : Phani : should not pass entity to controller in this case!!
+
+
+       String response =  userDetailService.userLogin(userLoginDetails);
+        System.out.println(response);
+return new ResponseEntity<String>(response, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/getUserDetails/{emailId}")
     public ResponseEntity<UserDetailsEntity> getOneUser(@PathVariable("emailId") String emailId) {
         UserDetailsEntity userDetailsEntity = userDetailService.getOneByEmailId(emailId);
         UserDetail userDetail = new UserDetail();
+        //Todo : Phani : remove commented code
 //
 //            if (userDetailsEntity.get() == null) {
 //                return new ResponseEntity<UserDetailsEntity>("", HttpStatus.OK);
@@ -69,50 +69,7 @@ public class UserDetailController {
         return new ResponseEntity<UserDetailsEntity>(userDetailsEntity, HttpStatus.OK);
     }
 
+    //Todo : Phani : move all this code out to a different controller
     //!!----MERCHANT CONTROLLERS---------!!
-
-    @RequestMapping(method = RequestMethod.POST, value = "/addMerchant")
-    public ResponseEntity<Boolean> addOrUpdateMerchant(@RequestBody MerchantDetail merchantDetail) {
-        System.out.println(merchantDetail);
-
-        Boolean bool;
-        bool = merchantDetailService.exists(merchantDetail.getEmailId());
-        if (bool == true) {
-            return new ResponseEntity<Boolean>(false, HttpStatus.OK);
-
-        }
-        MerchantDetail merchantDetail1 = merchantDetailService.save(merchantDetail);
-        bool = merchantDetail.getFullName().equals(merchantDetail1.getFullName());
-
-        return new ResponseEntity<Boolean>(bool, HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/checkMerchant")
-    public ResponseEntity<Boolean> checkMerchant(@RequestBody MerchantLoginDetails merchantLoginDetails) {
-        System.out.println("Inside checkUser, userName: " + merchantLoginDetails.getEmailId() + ", password: " + merchantLoginDetails.getPassword());
-        MerchantDetailsEntity merchantDetailsEntity = merchantDetailService.getOneByEmailId(merchantLoginDetails.getEmailId());
-        if (merchantDetailsEntity == null) {
-            System.out.println("User Not Found !");
-            return new ResponseEntity<>(false, HttpStatus.OK);
-        }
-        boolean result = merchantDetailsEntity.getPassword().equals(merchantLoginDetails.getPassword());
-        System.out.println("Password Matched: " + result);
-        return new ResponseEntity<Boolean>(result, HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/getMerchantDetails/{emailId}")
-    public ResponseEntity<MerchantDetailsEntity> getOneMerchant(@PathVariable("emailId") String emailId) {
-        MerchantDetailsEntity merchantDetailsEntity = merchantDetailService.getOneByEmailId(emailId);
-        MerchantDetail merchantDetail = new MerchantDetail();
-//
-//            if (userDetailsEntity.get() == null) {
-//                return new ResponseEntity<UserDetailsEntity>("", HttpStatus.OK);
-//            }
-        BeanUtils.copyProperties(merchantDetailsEntity, merchantDetail);
-        merchantDetailsEntity.setPassword("");
-        return new ResponseEntity<MerchantDetailsEntity>(merchantDetailsEntity, HttpStatus.OK);
-    }
-
-
 
 }

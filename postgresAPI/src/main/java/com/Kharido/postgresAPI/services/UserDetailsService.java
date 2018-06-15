@@ -1,6 +1,7 @@
 package com.Kharido.postgresAPI.services;
 
 import com.Kharido.postgresAPI.dto.UserDetail;
+import com.Kharido.postgresAPI.dto.UserLoginDetails;
 import com.Kharido.postgresAPI.entity.UserDetailsEntity;
 
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.Optional;
 
 public interface UserDetailsService {
 
-    public UserDetailsEntity findOne(String userId);
+    public Optional<UserDetailsEntity> findOne(String userId);
 
     public UserDetail save(UserDetail userDetail);
 
@@ -29,6 +30,8 @@ public interface UserDetailsService {
     public List<UserDetailsEntity> getByFirstName(String fullName);
 
     public UserDetailsEntity getOneByEmailId(String emailId);
+
+    public String userLogin(UserLoginDetails userDetail);
 
     //public List<UserLoginDetailEntity> getByFirstNameAndLastName(String firstName, String lastName);
 }

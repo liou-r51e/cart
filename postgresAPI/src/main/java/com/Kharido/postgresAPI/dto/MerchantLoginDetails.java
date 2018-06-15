@@ -6,22 +6,18 @@ import java.nio.charset.StandardCharsets;
 
 public class MerchantLoginDetails {
 
-    private String emailId;
+    private String merchantId;
     private String password;
 
-    public String getEmailId() {
-        return emailId;
+    public String getMerchantId() {
+        return merchantId;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
-    public String getPassword() {final String hashed = Hashing.sha256()
-            .hashString(password, StandardCharsets.UTF_8)
-            .toString();
-
-        return hashed;
+    public String getPassword() {return password;
     }
 
     public void setPassword(String password) {final String hashed = Hashing.sha256()
@@ -33,7 +29,7 @@ public class MerchantLoginDetails {
     @Override
     public String toString() {
         return "MerchantLoginDetails{" +
-                "emailId='" + emailId + '\'' +
+                "merchantId='" + merchantId + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

@@ -1,4 +1,4 @@
-/*
+
 package com.product.productRestApi.httpSend;
 
 
@@ -7,19 +7,13 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 
-public class HttpURLConnectionExample<R,T>{
-
-
-    //public R get(String )
-
-    ObjectMapper objectMapper = new ObjectMapper();
+public class HttpURLConnectionExample{
 
     // HTTP GET request
-    public R sendGet(String url, Class<R> rClass) throws Exception {
+    public static String sendGet(String url) throws Exception {
 
         //String url = "http://www.google.com/search?q=mkyong";
 
@@ -48,13 +42,13 @@ public class HttpURLConnectionExample<R,T>{
 
         //print result
         //System.out.println(response.toString());
-        R responseObject = objectMapper.readValue(response.toString(),rClass);
-        return responseObject;
+        //R responseObject = objectMapper.readValue(response.toString(),rClass.getClass());
+        return response.toString();
 
     }
 
     // HTTP POST request
-    private R sendPost(String url, Class<R> rClass, T tClass) throws Exception {
+    public static String sendPost(String url,String urlParameters) throws Exception {
 
         //String url = "https://selfsolve.apple.com/wcResults.do";
         URL obj = new URL(url);
@@ -71,7 +65,7 @@ public class HttpURLConnectionExample<R,T>{
         con.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 
-        String urlParameters = objectMapper.writeValueAsString(tClass);
+        //String urlParameters = objectMapper.writeValueAsString(tClass);
         wr.writeBytes(urlParameters);
         wr.flush();
         wr.close();
@@ -92,12 +86,11 @@ public class HttpURLConnectionExample<R,T>{
         in.close();
 
 
-        R responseObject = objectMapper.readValue(response.toString(),rClass);
+        //R responseObject = objectMapper.readValue(response.toString(),rClass);
 
         //print result
         //System.out.println(response.toString());
-        return responseObject;
+        return response.toString();//Object;
     }
 
 }
-*/

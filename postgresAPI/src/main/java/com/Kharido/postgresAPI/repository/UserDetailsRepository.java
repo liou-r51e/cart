@@ -10,6 +10,7 @@ import java.util.Optional;
 public interface UserDetailsRepository extends CrudRepository<UserDetailsEntity,String> {
 
 
-    public UserDetailsEntity findOneByEmailId(String emailID);
+    //Todo : Phani : this can be done by findById, since emailID is primary key
+ //   public UserDetailsEntity findOneByEmailId(String emailID);
 
 }

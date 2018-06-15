@@ -8,19 +8,19 @@ public class MerchantDetail {
 
 
     // private  String userId;
-    private  String emailId;
+    private  String merchantId;
     private  String fullName;
     private  String password;
     private String phoneNumber;
     private String storeAddress;
     private  String address;
 
-    public String getEmailId() {
-        return emailId;
+    public String getMerchantId() {
+        return merchantId;
     }
 
-    public void setEmailId(String emailId) {
-        this.emailId = emailId;
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public String getFullName() {
@@ -72,7 +72,7 @@ public class MerchantDetail {
     @Override
     public String toString() {
         return "MerchantDetail{" +
-                "emailId='" + emailId + '\'' +
+                "merchantId='" + merchantId + '\'' +
                 ", fullName='" + fullName + '\'' +
                 ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
