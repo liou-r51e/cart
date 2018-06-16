@@ -1,12 +1,12 @@
-package com.cart.orders.CartTransactionApi.dto;
+package com.cart.orders.CartTransactionApi.dtos;
 
-public class InventoryDetails {
+public class PidMidRelationDto {
 
     private String pmId;
     private String merchantId;
     private int productId;
     private int cost;
-    private int inventory;
+    private String status;
 
     public String getPmId() {
         return pmId;
@@ -40,22 +40,22 @@ public class InventoryDetails {
         this.cost = cost;
     }
 
-    public int getInventory() {
-        return inventory;
+    public String getStatus() {
+        return status;
     }
 
-    public void setInventory(int inventory) {
-        this.inventory = inventory;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "InventoryDetails{" +
+        return "PidMidRelationDto{" +
                 "pmId='" + pmId + '\'' +
                 ", merchantId='" + merchantId + '\'' +
                 ", productId=" + productId +
                 ", cost=" + cost +
-                ", inventory=" + inventory +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

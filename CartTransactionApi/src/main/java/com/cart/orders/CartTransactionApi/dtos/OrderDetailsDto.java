@@ -1,19 +1,20 @@
-package com.cart.orders.CartTransactionApi.dto;
+package com.cart.orders.CartTransactionApi.dtos;
 
-public class AllOrderDetails {
-    private String sessionId;
+public class OrderDetailsDto {
+    private int sessionId;
     private String merchantId;
-    private String productId;
-    private String cost;
+    private int productId;
+    private int cost;
     private String emailId;
-    private String quantity;
+    private int quantity;
     private String status;
+    private String additionalStatus;
 
-    public String getSessionId() {
+    public int getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
+    public void setSessionId(int sessionId) {
         this.sessionId = sessionId;
     }
 
@@ -25,19 +26,19 @@ public class AllOrderDetails {
         this.merchantId = merchantId;
     }
 
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public String getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(String cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
@@ -49,11 +50,11 @@ public class AllOrderDetails {
         this.emailId = emailId;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 
@@ -65,16 +66,25 @@ public class AllOrderDetails {
         this.status = status;
     }
 
+    public String getAdditionalStatus() {
+        return additionalStatus;
+    }
+
+    public void setAdditionalStatus(String additionalStatus) {
+        this.additionalStatus = additionalStatus;
+    }
+
     @Override
     public String toString() {
-        return "AllOrderDetails{" +
-                "sessionId='" + sessionId + '\'' +
+        return "OrderDetailsDto{" +
+                "sessionId=" + sessionId +
                 ", merchantId='" + merchantId + '\'' +
-                ", productId='" + productId + '\'' +
-                ", cost='" + cost + '\'' +
+                ", productId=" + productId +
+                ", cost=" + cost +
                 ", emailId='" + emailId + '\'' +
-                ", quantity='" + quantity + '\'' +
+                ", quantity=" + quantity +
                 ", status='" + status + '\'' +
+                ", additionalStatus='" + additionalStatus + '\'' +
                 '}';
     }
 }

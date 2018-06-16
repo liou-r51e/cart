@@ -1,5 +1,5 @@
 
-package com.product.productRestApi.httpSend;
+package com.cart.orders.CartTransactionApi.httpSend;
 
 
 import java.io.BufferedReader;
@@ -9,8 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 
-
-public class HttpURLConnectionExample{
+public class HttpURLConnectionExample {
 
     // HTTP GET request
     public static String sendGet(String url) throws Exception {
@@ -27,8 +26,8 @@ public class HttpURLConnectionExample{
         //con.setRequestProperty("User-Agent", USER_AGENT);
 
         int responseCode = con.getResponseCode();
-        //System.out.println("\nSending 'GET' request to URL : " + url);
-        //System.out.println("Response Code : " + responseCode);
+        System.out.println("\nSending 'GET' request to URL : " + url);
+        System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));

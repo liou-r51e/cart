@@ -9,6 +9,7 @@ import com.product.productRestApi.httpSend.HttpURLConnectionExample;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,17 +20,10 @@ public class ProductServicesImpl implements ProductServices{
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    String IP = "http://10.177.7.77:8080/product/";
+    String IP = "http://10.177.2.128:8095/product/";
 
-    Class<?> l;
+    AllNames allNames = new AllNames();
 
-    {
-        try {
-            l = Class.forName("com.product.productRestApi.entity.ProductDetailEntity");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class,ProductDetailEntity.class);
 
@@ -37,12 +31,13 @@ public class ProductServicesImpl implements ProductServices{
 
     @Override
     public List<String> getCategories() {
-        return Arrays.asList(AllNames.categories);
+        //System.out.println(Arrays.asList(AllNames.categories));
+        return Arrays.asList(allNames.categories);
     }
 
     @Override
     public List<String> getSubcategories(String category) {
-        return Arrays.asList(AllNames.subCategories.get(category));
+        return Arrays.asList(allNames.subCategories.get(category));
     }
 
     @Override
@@ -51,7 +46,7 @@ public class ProductServicesImpl implements ProductServices{
             List<ProductDetailEntity> productDetailEntities=null;
             String responseUrl = null;
             try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductByCategory/"+ name);
+                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductsByCategory/"+ name);
 
                 productDetailEntities = objectMapper.readValue(responseUrl,listtype);
             } catch (Exception e) {
@@ -63,7 +58,7 @@ public class ProductServicesImpl implements ProductServices{
             List<ProductDetailEntity> productDetailEntities=null;
             String responseUrl = null;
             try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductBySubCategory/"+name);
+                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductsBySubCategory/"+name);
 
                 productDetailEntities = objectMapper.readValue(responseUrl,listtype);
             } catch (Exception e) {
