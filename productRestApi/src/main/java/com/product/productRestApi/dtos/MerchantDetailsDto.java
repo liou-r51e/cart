@@ -7,7 +7,8 @@ public class MerchantDetailsDto {
     private  String fullName;
     private String phoneNumber;
     private String storeAddress;
-    private  String address;
+
+
 
     public String getMerchantId() {
         return merchantId;
@@ -41,11 +42,13 @@ public class MerchantDetailsDto {
         this.storeAddress = storeAddress;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
+    @Override
+    public String toString() {
+        return "MerchantDetailsDto{" +
+                "merchantId='" + merchantId + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", storeAddress='" + storeAddress + '\'' +
+                '}';
     }
 }

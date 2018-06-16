@@ -14,4 +14,6 @@ public class ProductDetailsDto {
     private List<String> images;
     private List<MerchantDetailsDto> merchantDetailsDtos;
 
+
+
 }

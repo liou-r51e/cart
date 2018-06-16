@@ -8,16 +8,24 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
+
+@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 public class CartServiceImpl implements CartService {
 
     ObjectMapper objectMapper = new ObjectMapper();
-    String all_order_ip = "http://10.177.1.245/all_orders/";
-    String pmId_ip = "http://10.177.1.245/pid_mid/";
+    String all_order_ip = "http://10.177.1.245:8090/all_orders/";
+    String pmId_ip = "http://localhost:8091/pid_mid/";
     JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class,OrderDetailsDto.class);
+
+
+
+
 
     public int checkInventory(OrderDetailsEntity orderDetailsEntity) {
         String pmId = String.valueOf(orderDetailsEntity.getProductId()) + orderDetailsEntity.getMerchantId();
@@ -29,6 +37,21 @@ public class CartServiceImpl implements CartService {
         }
         int inventory = Integer.valueOf(responseUrl).intValue();
         return inventory;
+    }
+
+    public boolean setInventory(String pmId,int value){
+        String responseUrl = null;
+        String urlParameters = null;
+        try {
+            urlParameters = objectMapper.writeValueAsString(value);
+            responseUrl = HttpURLConnectionExample.sendPost(pmId_ip+"update/inventory/"+pmId,urlParameters);
+            return responseUrl.matches("true");
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public int checkPrice(OrderDetailsEntity orderDetailsEntity){
@@ -173,7 +196,10 @@ public class CartServiceImpl implements CartService {
                 OrderDetailsEntity orderDetailsEntity = orderDetailsEntities.get(i);
                 int sessionId = orderDetailsEntity.getSessionId();
                 String responseUrl = null;
+                String pmId = orderDetailsEntity.getProductId() + orderDetailsEntity.getMerchantId();
+
                 try {
+
                     responseUrl = HttpURLConnectionExample.sendGet(all_order_ip+"update/status/"+String.valueOf(sessionId)+"/Order Placed");
 
                 } catch (Exception e) {
@@ -181,6 +207,7 @@ public class CartServiceImpl implements CartService {
                 }
                 if(responseUrl.matches("true")){
                     orderDetailsDtos.get(i).setAdditionalStatus("Order Placed");
+
                 }
                 else{
                     orderDetailsDtos.get(i).setAdditionalStatus("Error Placing order");

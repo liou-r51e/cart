@@ -13,4 +13,7 @@ public interface PidMidRelationServices {
     public int getInventory(String pmId);
     public PidMidRelationEntity getPidMidRelation(String pmId);
     public List<PidMidRelationEntity> getAll();
+
+    public List<PidMidRelationEntity> getMerchants(int productId);
+    public List<PidMidRelationEntity> getProducts(String merchantId);
 }

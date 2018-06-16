@@ -68,4 +68,14 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
     public List<PidMidRelationEntity> getAll() {
         return (List)pidMidRelationRepository.findAll();
     }
+
+    @Override
+    public List<PidMidRelationEntity> getMerchants(int productId) {
+        return (List)pidMidRelationRepository.findAllByProductId(productId);
+    }
+
+    @Override
+    public List<PidMidRelationEntity> getProducts(String merchantId) {
+        return (List)pidMidRelationRepository.findAllByMerchantId(merchantId);
+    }
 }
