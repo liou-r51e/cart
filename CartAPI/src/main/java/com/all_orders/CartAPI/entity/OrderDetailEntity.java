@@ -9,14 +9,14 @@ import javax.persistence.Table;
     @Table(name = OrderDetailEntity.TABLE_NAME)
     public class OrderDetailEntity {
 
-        public static final String TABLE_NAME = "allOrdersDb";
+        public static final String TABLE_NAME = "allOrders";
         private static final String ID_COLUMN = "sessionId";
 
 
         @Id
         @Column(name = OrderDetailEntity.ID_COLUMN)
 
-        private String sessionId;
+        private int sessionId;
         private String emailId;
         private int productId;
         private String merchantId;
@@ -45,11 +45,11 @@ import javax.persistence.Table;
             return ID_COLUMN;
         }
 
-        public String getSessionId() {
+        public int getSessionId() {
             return sessionId;
         }
 
-        public void setSessionId(String sessionId) {
+        public void setSessionId(int sessionId) {
             this.sessionId = sessionId;
         }
 

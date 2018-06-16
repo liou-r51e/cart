@@ -38,6 +38,7 @@ public class UserDetail {
     }
 
     public String getPassword() {
+        //Todo : Phani : remove hashing from get method
         final String hashed = Hashing.sha256()
                 .hashString(password, StandardCharsets.UTF_8)
                 .toString();

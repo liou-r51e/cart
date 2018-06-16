@@ -17,6 +17,16 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 @Autowired
 OrderRepository orderRepository;
 
+
+    static int sessionCount=0;
+
+    int getSessionCount(){
+        if(sessionCount==0){
+            sessionCount=((List)orderRepository.findAll()).size();
+        }
+        return sessionCount;
+    }
+
     @Override
     public Optional<OrderDetailEntity> findOne(String userId) {
         return Optional.empty();
@@ -27,6 +37,8 @@ OrderRepository orderRepository;
 
         OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
         BeanUtils.copyProperties(orderDetail, orderDetailEntity);
+        orderDetailEntity.setSessionId(getSessionCount()+1);
+        sessionCount++;
         orderRepository.save(orderDetailEntity);
         System.out.println(orderDetailEntity.getSessionId());
         OrderDetail response = new OrderDetail();
@@ -108,20 +120,27 @@ OrderRepository orderRepository;
     }
 
     @Override
-    public int getCost(String sessionId) {
-        OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
+    public int getCost(int sessionId) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
         return orderDetailEntity.getCost();
     }
 
     @Override
-    public String getStatus(String sessionId) {
-        OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
+    public String getStatus(int sessionId) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
         return orderDetailEntity.getStatus();
     }
 
     @Override
-    public int getQuantity(String sessionId) {
-        OrderDetailEntity orderDetailEntity = orderRepository.findById(sessionId).get();
+    public int getQuantity(int sessionId) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
         return orderDetailEntity.getQuantity();
+    }
+
+    @Override
+    public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId,String status){
+            List<OrderDetailEntity> orderDetailEntities = orderRepository.findByEmailIdAndStatus(emailId,status);
+            return  orderDetailEntities;
+
     }
 }
