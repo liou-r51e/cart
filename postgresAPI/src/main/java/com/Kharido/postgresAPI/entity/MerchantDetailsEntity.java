@@ -22,6 +22,16 @@ public class MerchantDetailsEntity {
     private String fullName;
     private String phoneNumber;
     private String address;
+    private String storeAddress;
+    private int ratings;
+
+    public int getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(int ratings) {
+        this.ratings = ratings;
+    }
 
     public String getStoreAddress() {
         return storeAddress;
@@ -31,7 +41,6 @@ public class MerchantDetailsEntity {
         this.storeAddress = storeAddress;
     }
 
-    private String storeAddress;
 
     public static String getTableName() {
         return TABLE_NAME;
@@ -90,6 +99,7 @@ public class MerchantDetailsEntity {
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +
+                ", ratings=" + ratings +
                 '}';
     }
 }

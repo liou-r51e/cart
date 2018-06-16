@@ -143,4 +143,12 @@ OrderRepository orderRepository;
             return  orderDetailEntities;
 
     }
+
+    @Override
+    public List<OrderDetailEntity> getOrdersByEmailId(String emailId) {
+        List<OrderDetailEntity> orderDetailEntities = (List<OrderDetailEntity>) orderRepository.findById(emailId).get();
+        return  orderDetailEntities;
+    }
+
+
 }

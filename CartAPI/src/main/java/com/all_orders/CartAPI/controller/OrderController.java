@@ -44,11 +44,11 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "add")
-    public ResponseEntity<OrderDetail> addOrUpdateEmployee(@RequestBody OrderDetail orderDetail) {
+    public ResponseEntity<Boolean> addOrUpdateEmployee(@RequestBody OrderDetail orderDetail) {
         System.out.println(orderDetail);
 
         OrderDetail orderDetail1 = orderDetailService.save(orderDetail);
-        return new ResponseEntity<OrderDetail>(orderDetail1, HttpStatus.OK);
+        return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
 
@@ -89,10 +89,22 @@ public class OrderController {
     }
 
     @RequestMapping(method = RequestMethod.GET,value = "get/pastOrders/{emailId}/{status}")
-    public ResponseEntity<List<OrderDetail>> getPastOrders(@PathVariable("emailId") String emailId,@PathVariable("status") String status){
+    public ResponseEntity<List<OrderDetail>> getPastOrdersByStatus(@PathVariable("emailId") String emailId,@PathVariable("status") String status){
         List<OrderDetailEntity> pastOrderList = orderDetailService.getByEmailIdAndStatus(emailId,status);
         List<OrderDetail> orders = new ArrayList<>();
         for (OrderDetailEntity orderDetailEntity : pastOrderList) {
+            OrderDetail orderDetail = new OrderDetail();
+            BeanUtils.copyProperties(orderDetailEntity, orderDetail);
+            orders.add(orderDetail);
+        }
+        return new ResponseEntity<List<OrderDetail>>(orders, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value = "get/pastOrders/{emailId}")
+    public ResponseEntity<List<OrderDetail>> getPastOrdersByUser(@PathVariable("emailId") String emailId){
+        List<OrderDetailEntity> userOrderList = orderDetailService.getOrdersByEmailId(emailId);
+        List<OrderDetail> orders = new ArrayList<>();
+        for (OrderDetailEntity orderDetailEntity : userOrderList) {
             OrderDetail orderDetail = new OrderDetail();
             BeanUtils.copyProperties(orderDetailEntity, orderDetail);
             orders.add(orderDetail);

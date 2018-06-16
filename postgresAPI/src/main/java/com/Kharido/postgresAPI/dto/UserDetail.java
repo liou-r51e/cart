@@ -39,15 +39,16 @@ public class UserDetail {
 
     public String getPassword() {
         //Todo : Phani : remove hashing from get method
-        final String hashed = Hashing.sha256()
-                .hashString(password, StandardCharsets.UTF_8)
-                .toString();
-
-        return hashed;
+//        final String hashed = Hashing.sha256()
+//                .hashString(password, StandardCharsets.UTF_8)
+//                .toString();
+//
+//        return hashed;
+        return password;
     }
 
     public void setPassword(String password) {
-
+        System.out.println(password);
         final String hashed = Hashing.sha256()
                 .hashString(password, StandardCharsets.UTF_8)
                 .toString();
