@@ -15,5 +15,81 @@ public class ProductDetailsDto {
     private List<MerchantDetailsDto> merchantDetailsDtos;
 
 
+    @Override
+    public String toString() {
+        return "ProductDetailsDto{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", category='" + category + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", discription='" + discription + '\'' +
+                ", attribute=" + attribute +
+                ", images=" + images +
+                ", merchantDetailsDtos=" + merchantDetailsDtos +
+                '}';
+    }
 
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSubCategory() {
+        return subCategory;
+    }
+
+    public void setSubCategory(String subCategory) {
+        this.subCategory = subCategory;
+    }
+
+    public String getDiscription() {
+        return discription;
+    }
+
+    public void setDiscription(String discription) {
+        this.discription = discription;
+    }
+
+    public List<Map> getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(List<Map> attribute) {
+        this.attribute = attribute;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
+    public List<MerchantDetailsDto> getMerchantDetailsDtos() {
+        return merchantDetailsDtos;
+    }
+
+    public void setMerchantDetailsDtos(List<MerchantDetailsDto> merchantDetailsDtos) {
+        this.merchantDetailsDtos = merchantDetailsDtos;
+    }
 }

@@ -22,7 +22,7 @@ public class CartController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/add")
     public ResponseEntity<OrderDetailsDto> addOrder(@RequestBody OrderDetailsDto orderDetailsDto){
-        OrderDetailsEntity orderDetailsEntity = null;
+        OrderDetailsEntity orderDetailsEntity = new OrderDetailsEntity();
         BeanUtils.copyProperties(orderDetailsDto,orderDetailsEntity);
         orderDetailsDto = cartService.addOrder(orderDetailsEntity);
 
@@ -31,7 +31,7 @@ public class CartController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/update")
     public ResponseEntity<OrderDetailsDto> updateOrder(@RequestBody OrderDetailsDto orderDetailsDto){
-        OrderDetailsEntity orderDetailsEntity = null;
+        OrderDetailsEntity orderDetailsEntity = new OrderDetailsEntity();
         BeanUtils.copyProperties(orderDetailsDto,orderDetailsEntity);
         orderDetailsDto = cartService.updateOrder(orderDetailsEntity);
 

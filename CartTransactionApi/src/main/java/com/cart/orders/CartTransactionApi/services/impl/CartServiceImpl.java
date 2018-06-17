@@ -8,18 +8,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Service
 @Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 public class CartServiceImpl implements CartService {
 
     ObjectMapper objectMapper = new ObjectMapper();
-    String all_order_ip = "http://10.177.1.245:8090/all_orders/";
+    String all_order_ip = "http://localhost:8092/all_orders/";
     String pmId_ip = "http://localhost:8091/pid_mid/";
     JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class,OrderDetailsDto.class);
 
@@ -70,7 +71,7 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public OrderDetailsDto addOrder(OrderDetailsEntity orderDetailsEntity) {
-        OrderDetailsDto orderDetailsDto = null;
+        OrderDetailsDto orderDetailsDto = new OrderDetailsDto();
         BeanUtils.copyProperties(orderDetailsEntity,orderDetailsDto);
 
         int cost = checkPrice(orderDetailsEntity);

@@ -58,6 +58,13 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
 
     @Override
     @Transactional(readOnly = true)
+    public int getCost(String pmId) {
+        PidMidRelationEntity pidMidRelationEntity = pidMidRelationRepository.findById(pmId).get();
+        return pidMidRelationEntity.getCost();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PidMidRelationEntity getPidMidRelation(String pmId) {
 
         return pidMidRelationRepository.findById(pmId).get();

@@ -14,5 +14,6 @@ public interface ProductService {
     public ProductEntity findByProductId(int productId);
     public void delete(int productId);
     public ProductEntity insert(ProductEntity productEntity);
+    public void deleteAll();
 
 }

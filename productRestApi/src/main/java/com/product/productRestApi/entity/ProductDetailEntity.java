@@ -1,6 +1,8 @@
 package com.product.productRestApi.entity;
 
 
+import com.product.productRestApi.dtos.MerchantDetailsDto;
+
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +16,7 @@ public class ProductDetailEntity {
     private String discription;
     private List<Map> attribute;
     private List<String> images;
+    private List<MerchantDetailsDto> merchantDetailsDtos;
 
     public String getSubCategory() {
         return subCategory;

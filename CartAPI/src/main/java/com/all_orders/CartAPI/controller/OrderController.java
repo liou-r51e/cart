@@ -45,7 +45,7 @@ public class OrderController {
 
     @RequestMapping(method = RequestMethod.POST, value = "add")
     public ResponseEntity<OrderDetail> addOrUpdateEmployee(@RequestBody OrderDetail orderDetail) {
-        System.out.println(orderDetail);
+        //System.out.println(orderDetail);
 
         OrderDetail orderDetail1 = orderDetailService.save(orderDetail);
         return new ResponseEntity<OrderDetail>(orderDetail1, HttpStatus.OK);

@@ -98,4 +98,25 @@ public class ProductController  {
 
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/insertAll")
+    public ResponseEntity<List<ProductDTO>> insertAll(@RequestBody List<ProductDTO> productDTOs){
+        List<ProductDTO> productDTOsNew = new ArrayList<>();
+        for (ProductDTO i:productDTOs) {
+            ProductDTO j = new ProductDTO();
+            ProductEntity productEntity = new ProductEntity ();
+            BeanUtils.copyProperties(i, productEntity);
+            productEntity = productService.insert (productEntity);
+            BeanUtils.copyProperties ( productEntity,j );
+            productDTOsNew.add(j);
+        }
+        return new ResponseEntity<>(productDTOsNew, HttpStatus.OK);
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value="/deleteAll")
+    public ResponseEntity<Boolean> deleteAll(){
+        productService.deleteAll();
+        return new ResponseEntity<>(true,HttpStatus.OK);
+    }
+
 }

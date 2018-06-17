@@ -64,5 +64,10 @@ public class ProductServiceImpl implements ProductService {
         return  productRepository.insert(productEntity);
     }
 
+    @Override
+    public void deleteAll(){
+        productRepository.deleteAll();
+    }
+
 
 }

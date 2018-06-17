@@ -20,7 +20,7 @@ public class ProductServicesImpl implements ProductServices{
 
     ObjectMapper objectMapper = new ObjectMapper();
 
-    String IP = "http://10.177.2.128:8095/product/";
+    String IP = "http://localhost:8095/product/";
 
     AllNames allNames = new AllNames();
 
@@ -75,7 +75,7 @@ public class ProductServicesImpl implements ProductServices{
         String responseURL=null;
         ProductDetailEntity responseObj=null;
         try {
-            responseURL = HttpURLConnectionExample.sendGet(IP+"getProductById/"+String.valueOf(productId));
+            responseURL = HttpURLConnectionExample.sendGet(IP+"getProductDetailsById/"+String.valueOf(productId));
         } catch (Exception e) {
             e.printStackTrace();
         }

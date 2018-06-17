@@ -11,6 +11,7 @@ public interface PidMidRelationServices {
     public boolean deleteInventory(String pmId);
     public boolean addInventory(PidMidRelationEntity pidMidRelationEntity);
     public int getInventory(String pmId);
+    public int getCost(String pmId);
     public PidMidRelationEntity getPidMidRelation(String pmId);
     public List<PidMidRelationEntity> getAll();
 

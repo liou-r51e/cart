@@ -37,13 +37,19 @@ public class Controller {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "add")
-    public ResponseEntity<Boolean> updateInventory(@RequestBody PidMidRelationEntity pidMidRelationEntity) {
+    public ResponseEntity<Boolean> addPidMidRelation(@RequestBody PidMidRelationEntity pidMidRelationEntity) {
         Boolean bool = pidMidRelationServices.addInventory(pidMidRelationEntity);
         return new ResponseEntity<Boolean>(bool, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "get/inventory/{pmId}")
-    public ResponseEntity<Integer> updateInventory(@PathVariable("pmId") String pmId) {
+    public ResponseEntity<Integer> getInventory(@PathVariable("pmId") String pmId) {
+        int inventory = pidMidRelationServices.getInventory(pmId);
+        return new ResponseEntity<Integer>(inventory, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "get/cost/{pmId}")
+    public ResponseEntity<Integer> getCost(@PathVariable("pmId") String pmId) {
         int inventory = pidMidRelationServices.getInventory(pmId);
         return new ResponseEntity<Integer>(inventory, HttpStatus.OK);
     }
@@ -55,7 +61,7 @@ public class Controller {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "getAll")
-    public ResponseEntity<List<PidMidRelationEntity>> getPidMidRelation() {
+    public ResponseEntity<List<PidMidRelationEntity>> getAllPidMidRelation() {
         List<PidMidRelationEntity> pidMidRelationEntity = pidMidRelationServices.getAll();
         return new ResponseEntity<List<PidMidRelationEntity>>(pidMidRelationEntity, HttpStatus.OK);
     }
