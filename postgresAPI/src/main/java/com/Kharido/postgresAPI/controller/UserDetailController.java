@@ -39,6 +39,7 @@ public class UserDetailController {
 
         }
         otp = userDetailService.emailValidation(userDetail.getEmailId());
+        System.out.println(otp);
         this.userDetail=userDetail;
 
         // UserDetail userDetail1 = userDetailService.save(userDetail);
@@ -47,10 +48,13 @@ public class UserDetailController {
         return new ResponseEntity<Boolean>(true, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/register/otp")
-    public ResponseEntity<Boolean> OTP(@RequestBody int otp) {
-        if (otp == this.otp) {
-            UserDetail userDetail1 = userDetailService.save(userDetail);
+    @RequestMapping(method = RequestMethod.GET, value = "/register/otp/{number}")
+    public ResponseEntity<Boolean> OTP(@PathVariable("number") String number) {
+        System.out.println(number+" submitted");
+        System.out.println(otp + "generated");
+        if (Integer.parseInt(number) == this.otp) {
+            UserDetail userDetail1 = userDetailService.save(this.userDetail);
+            System.out.println(userDetail+"\n user data  ");
             return new ResponseEntity<Boolean>(true, HttpStatus.OK);
         }
         return new ResponseEntity<Boolean>(false, HttpStatus.OK);

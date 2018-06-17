@@ -45,5 +45,7 @@ public interface OrderDetailService {
 
     public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId,String status);
 
+    public List<OrderDetailEntity> getOrdersByEmailId(String emailId);
+
 
 }

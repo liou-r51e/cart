@@ -28,11 +28,11 @@ public class UserLoginDetails {
 
     //Todo : Phani : keep only one level hashing, not in get and set
     public String getPassword() {
-return password;
+        return password;
     }
 
     public void setPassword(String password) {
-
+        System.out.println(password);
         final String hashed = Hashing.sha256()
                 .hashString(password, StandardCharsets.UTF_8)
                 .toString();

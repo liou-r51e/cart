@@ -20,7 +20,7 @@ import java.util.Random;
 public class UserDetailServiceImpl implements UserDetailsService {
     private static String USER_NAME = "adarsh.spy";  // GMail user name (just the part before "@gmail.com")
     private static String PASSWORD = "hizbolah@4"; // GMail password
-    private static String RECIPIENT = "adarsh.spy@gmail.com";
+    private static String RECIPIENT ;//"adarsh.spy@gmail.com";
 
     @Autowired
     UserDetailsRepository userDetailsRepository;
@@ -98,12 +98,13 @@ public class UserDetailServiceImpl implements UserDetailsService {
         }
 
        UserDetailsEntity userLoginDetailEntity = userDetailsRepository.findById(userLoginDetails.getEmailId()).get();
-        if (userLoginDetailEntity == null) {
-            //Todo : Phani : remove system.out.println, use logger instead
-            System.out.println("User Not Found...");
-            return ("Email is not registered...");
-        }
+//        if (userLoginDetailEntity == null) {
+//            //Todo : Phani : remove system.out.println, use logger instead
+//            System.out.println("User Not Found...");
+//            return ("Email is not registered...");
+//        }
         boolean userPassWordCheck = userLoginDetailEntity.getPassword().equals(userLoginDetails.getPassword());
+        System.out.println(userLoginDetailEntity.getPassword()+"\n"+userLoginDetails.getPassword());
         if(userPassWordCheck == false)
         {
             return ("Username/Password incorrect...");
@@ -121,7 +122,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
         int rand_int = rand.nextInt(1000);
         String from = USER_NAME;
         String pass = PASSWORD;
-        String[] to = { RECIPIENT }; // list of recipient email addresses
+        String[] to = { emailId }; // list of recipient email addresses
+        System.out.println(emailId);
         String subject = "Kharido welcomes you!!";
         String body = "Welcome to the fastest growing ecommerce website in india. Please verify your email by entering " +
                 "the mentioned OTP in your mobile application!"+"\n OTP : "+rand_int +"\n Regards, \nKharido Team";
