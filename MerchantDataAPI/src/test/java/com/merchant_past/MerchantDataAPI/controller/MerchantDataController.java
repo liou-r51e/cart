@@ -53,17 +53,18 @@ public class MerchantDataController {
         return new ResponseEntity<Boolean>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "rating/{merchantId}")
-    public ResponseEntity<Double> getRating(@PathVariable("merchantId") String merchantId) {
-        Double rating = merchantDataService.getRating(merchantId);
-        return new ResponseEntity<Double>(rating, HttpStatus.OK);
-    }
-
 
     @RequestMapping(method = RequestMethod.GET, value = "ratingCount/{merchantId}")
     public ResponseEntity<Integer> getNumberOfRating(@PathVariable("merchantId") String merchantId) {
         int ratingCount = merchantDataService.getNumberOfRatings(merchantId);
         return new ResponseEntity<Integer>(ratingCount, HttpStatus.OK);
+
+
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "rating/{merchantId}")
+    public ResponseEntity<Double> getRating(@PathVariable("merchantId") String merchantId) {
+        Double rating = merchantDataService.getRating(merchantId);
+        return new ResponseEntity<Double>(rating, HttpStatus.OK);
+    }
 }
