@@ -11,10 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class Controller {
+public class ProductController {
 
     @Autowired
     ProductServices productServices;
@@ -35,11 +36,12 @@ public class Controller {
 
     @RequestMapping("product/{category}")
     public ResponseEntity<List<ProductSummaryDto>> getProductsByCategory(@PathVariable("category") String category){
-        List<ProductSummaryDto> productSummaryDtos = null;
+        List<ProductSummaryDto> productSummaryDtos = new ArrayList<>();
         List<ProductDetailEntity> productDetailEntities = productServices.getProducts(category,0);
         for (ProductDetailEntity productDetailEntity:productDetailEntities) {
             ProductSummaryDto productSummaryDto = new ProductSummaryDto();
             BeanUtils.copyProperties(productDetailEntity,productSummaryDto);
+            productSummaryDto.setMerchantDetailsDto(productDetailEntity.getMerchantDetailsDtos().get(0));
             productSummaryDtos.add(productSummaryDto);
         }
         return new ResponseEntity<List<ProductSummaryDto>>(productSummaryDtos,HttpStatus.OK);
@@ -47,7 +49,7 @@ public class Controller {
 
     @RequestMapping("product/{category}/{subcategory}")
     public ResponseEntity<List<ProductSummaryDto>> getSubcategory(@PathVariable("category") String category,@PathVariable("subcategory") String subcategory){
-        List<ProductSummaryDto> productSummaryDtos = null;
+        List<ProductSummaryDto> productSummaryDtos = new ArrayList<>();
         List<ProductDetailEntity> productDetailEntities = productServices.getProducts(subcategory,1);
         for (ProductDetailEntity productDetailEntity:productDetailEntities) {
             ProductSummaryDto productSummaryDto = new ProductSummaryDto();
@@ -65,7 +67,7 @@ public class Controller {
     }
 */
 
-    @RequestMapping("/details/{productId}")
+    @RequestMapping("/product/details/{productId}")
     public ResponseEntity<ProductDetailsDto> getDetails(@PathVariable("productId") int productId){
         ProductDetailEntity productDetailEntity = productServices.getProductDetails(productId);
         ProductDetailsDto productDetailsDto = new ProductDetailsDto();
@@ -73,14 +75,15 @@ public class Controller {
         return new ResponseEntity<ProductDetailsDto>(productDetailsDto,HttpStatus.OK);
     }
 
-    @RequestMapping("/getAll")
+    @RequestMapping("/product/getAll")
     public ResponseEntity<List<ProductSummaryDto>> getAll(){
         List<ProductDetailEntity> productDetailEntities = productServices.getAllProducts();
-        List<ProductSummaryDto> productSummaryDtos=null;
+        List<ProductSummaryDto> productSummaryDtos= new ArrayList<>();
         for (ProductDetailEntity i:productDetailEntities) {
             ProductSummaryDto j = new ProductSummaryDto();
             BeanUtils.copyProperties(i,j);
             productSummaryDtos.add(j);
+            //System.out.println(productSummaryDtos);
         }
         return new ResponseEntity<List<ProductSummaryDto>>(productSummaryDtos,HttpStatus.OK);
     }
@@ -100,22 +103,5 @@ public class Controller {
     public ResponseEntity<Boolean> deleteByProductId(@PathVariable("productId") int productId){
         return new ResponseEntity<>(productServices.deleteByProductId(productId),HttpStatus.OK);
     }
-
-/*
-    public static void main(String[] args) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            ProductDetailEntity n = new ProductDetailEntity();
-            System.out.println(objectMapper.writeValueAsString(n));
-            JavaType type = objectMapper.getTypeFactory().constructParametricType(List.class,ProductDetailEntity.class);
-            ProductDetailEntity n1 = objectMapper.readValue(objectMapper.writeValueAsString(n),type);
-            System.out.println(n1);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
 
 }

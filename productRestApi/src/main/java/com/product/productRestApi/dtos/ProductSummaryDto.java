@@ -7,7 +7,8 @@ public class ProductSummaryDto {
     private int productId;
     private String productName;
     private List<String> images;
-    private String merchantId;
+    private MerchantDetailsDto merchantDetailsDto;
+    private int cost;
 
 
     public int getProductId() {
@@ -34,11 +35,30 @@ public class ProductSummaryDto {
         this.images = images;
     }
 
-    public String getMerchantId() {
-        return merchantId;
+    public MerchantDetailsDto getMerchantDetailsDto() {
+        return merchantDetailsDto;
     }
 
-    public void setMerchantId(String merchantId) {
-        this.merchantId = merchantId;
+    public void setMerchantDetailsDto(MerchantDetailsDto merchantDetailsDto) {
+        this.merchantDetailsDto = merchantDetailsDto;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductSummaryDto{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", images=" + images +
+                ", merchantDetailsDto=" + merchantDetailsDto +
+                ", cost=" + cost +
+                '}';
     }
 }

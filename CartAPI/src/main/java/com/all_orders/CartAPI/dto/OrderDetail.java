@@ -2,7 +2,7 @@ package com.all_orders.CartAPI.dto;
 
 public class OrderDetail {
 
-    private String sessionId;
+    private int sessionId;
     private String emailId;
     private int productId;
     private String merchantId;
@@ -10,11 +10,11 @@ public class OrderDetail {
     private int quantity;
     private String status;
 
-    public String getSessionId() {
+    public int getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
+    public void setSessionId(int sessionId) {
         this.sessionId = sessionId;
     }
 

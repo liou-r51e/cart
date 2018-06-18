@@ -37,11 +37,15 @@ public interface OrderDetailService {
 
     public boolean updateStatus(int sessionId,String status);
 
-    public int getCost(String sessionId);
+    public int getCost(int sessionId);
 
-    public String getStatus(String sessionId);
+    public String getStatus(int sessionId);
 
-    public int getQuantity(String sessionID);
+    public int getQuantity(int sessionID);
+
+    public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId,String status);
+
+    public List<OrderDetailEntity> getOrdersByEmailId(String emailId);
 
 
 }

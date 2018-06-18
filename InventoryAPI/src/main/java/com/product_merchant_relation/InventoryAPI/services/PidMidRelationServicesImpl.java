@@ -21,7 +21,6 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
     public boolean updateInventory(String pmId, int inventory) {
         PidMidRelationEntity pidMidRelationEntity = pidMidRelationRepository.findById(pmId).get();
         pidMidRelationEntity.setInventory(inventory);
-        pidMidRelationRepository.deleteByPmId(pmId);
 
         return pidMidRelationEntity.equals(pidMidRelationRepository.save(pidMidRelationEntity));
     }
@@ -30,7 +29,6 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
     public boolean updateCost(String pmId, int cost) {
         PidMidRelationEntity pidMidRelationEntity = pidMidRelationRepository.findById(pmId).get();
         pidMidRelationEntity.setCost(cost);
-        pidMidRelationRepository.deleteByPmId(pmId);
 
         return pidMidRelationEntity.equals(pidMidRelationRepository.save(pidMidRelationEntity));
     }
@@ -39,11 +37,13 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
     @Override
     public boolean deleteInventory(String pmId) {
         pidMidRelationRepository.deleteByPmId(pmId);
-        return false;
+        return true;
     }
 
     @Override
     public boolean addInventory(PidMidRelationEntity pidMidRelationEntity) {
+        String pmId = pidMidRelationEntity.getProductId()+pidMidRelationEntity.getMerchantId();
+        pidMidRelationEntity.setPmId(pmId);
         PidMidRelationEntity pidMidRelationEntityNew = pidMidRelationRepository.save(pidMidRelationEntity);
 
         return pidMidRelationEntity.equals(pidMidRelationEntityNew);
@@ -58,6 +58,13 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
 
     @Override
     @Transactional(readOnly = true)
+    public int getCost(String pmId) {
+        PidMidRelationEntity pidMidRelationEntity = pidMidRelationRepository.findById(pmId).get();
+        return pidMidRelationEntity.getCost();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public PidMidRelationEntity getPidMidRelation(String pmId) {
 
         return pidMidRelationRepository.findById(pmId).get();
@@ -67,5 +74,15 @@ public class PidMidRelationServicesImpl implements PidMidRelationServices {
     @Transactional(readOnly = true)
     public List<PidMidRelationEntity> getAll() {
         return (List)pidMidRelationRepository.findAll();
+    }
+
+    @Override
+    public List<PidMidRelationEntity> getMerchants(int productId) {
+        return (List)pidMidRelationRepository.findAllByProductId(productId);
+    }
+
+    @Override
+    public List<PidMidRelationEntity> getProducts(String merchantId) {
+        return (List)pidMidRelationRepository.findAllByMerchantId(merchantId);
     }
 }

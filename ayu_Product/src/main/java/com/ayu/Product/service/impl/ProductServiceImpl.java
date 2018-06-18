@@ -93,5 +93,10 @@ public class ProductServiceImpl implements ProductService {
         return  productEntity1;
     }
 
+    @Override
+    public void deleteAll(){
+        productRepository.deleteAll();
+    }
+
 
 }
