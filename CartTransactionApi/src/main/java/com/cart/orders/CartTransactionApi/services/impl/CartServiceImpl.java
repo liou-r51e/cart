@@ -197,7 +197,7 @@ public class CartServiceImpl implements CartService {
                 OrderDetailsEntity orderDetailsEntity = orderDetailsEntities.get(i);
                 int sessionId = orderDetailsEntity.getSessionId();
                 String responseUrl = null;
-                String pmId = orderDetailsEntity.getProductId() + orderDetailsEntity.getMerchantId();
+                //String pmId = orderDetailsEntity.getProductId() + orderDetailsEntity.getMerchantId();
 
                 try {
 

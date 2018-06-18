@@ -41,6 +41,7 @@ public class ProductController {
         for (ProductDetailEntity productDetailEntity:productDetailEntities) {
             ProductSummaryDto productSummaryDto = new ProductSummaryDto();
             BeanUtils.copyProperties(productDetailEntity,productSummaryDto);
+            productSummaryDto.setMerchantDetailsDto(productDetailEntity.getMerchantDetailsDtos().get(0));
             productSummaryDtos.add(productSummaryDto);
         }
         return new ResponseEntity<List<ProductSummaryDto>>(productSummaryDtos,HttpStatus.OK);
@@ -102,22 +103,5 @@ public class ProductController {
     public ResponseEntity<Boolean> deleteByProductId(@PathVariable("productId") int productId){
         return new ResponseEntity<>(productServices.deleteByProductId(productId),HttpStatus.OK);
     }
-
-/*
-    public static void main(String[] args) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            ProductDetailEntity n = new ProductDetailEntity();
-            System.out.println(objectMapper.writeValueAsString(n));
-            JavaType type = objectMapper.getTypeFactory().constructParametricType(List.class,ProductDetailEntity.class);
-            ProductDetailEntity n1 = objectMapper.readValue(objectMapper.writeValueAsString(n),type);
-            System.out.println(n1);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-*/
 
 }

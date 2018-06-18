@@ -8,6 +8,7 @@ public class ProductSummaryDto {
     private String productName;
     private List<String> images;
     private MerchantDetailsDto merchantDetailsDto;
+    private int cost;
 
 
     public int getProductId() {
@@ -42,6 +43,14 @@ public class ProductSummaryDto {
         this.merchantDetailsDto = merchantDetailsDto;
     }
 
+    public int getCost() {
+        return cost;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
     @Override
     public String toString() {
         return "ProductSummaryDto{" +
@@ -49,6 +58,7 @@ public class ProductSummaryDto {
                 ", productName='" + productName + '\'' +
                 ", images=" + images +
                 ", merchantDetailsDto=" + merchantDetailsDto +
+                ", cost=" + cost +
                 '}';
     }
 }

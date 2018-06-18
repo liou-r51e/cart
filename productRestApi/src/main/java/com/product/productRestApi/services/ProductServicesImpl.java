@@ -8,14 +8,12 @@ import com.product.productRestApi.entity.ProductDetailEntity;
 import com.product.productRestApi.httpSend.HttpURLConnectionExample;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Arrays;
 import java.util.List;
 
 
 @Service
-public class ProductServicesImpl implements ProductServices{
+public class ProductServicesImpl implements ProductServices {
 
 
     ObjectMapper objectMapper = new ObjectMapper();
@@ -25,8 +23,9 @@ public class ProductServicesImpl implements ProductServices{
     AllNames allNames = new AllNames();
 
 
-    JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class,ProductDetailEntity.class);
+    JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class, ProductDetailEntity.class);
 
+    MerchantSelectService merchantSelectService;
 
 
     @Override
@@ -42,27 +41,33 @@ public class ProductServicesImpl implements ProductServices{
 
     @Override
     public List<ProductDetailEntity> getProducts(String name, int type) {
-        if(type==0) {//get all products by category
-            List<ProductDetailEntity> productDetailEntities=null;
+        if (type == 0) {//get all products by category
+            List<ProductDetailEntity> productDetailEntities = null;
             String responseUrl = null;
             try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductsByCategory/"+ name);
+                responseUrl = HttpURLConnectionExample.sendGet(IP + "getProductsByCategory/" + name);
 
-                productDetailEntities = objectMapper.readValue(responseUrl,listtype);
+                productDetailEntities = objectMapper.readValue(responseUrl, listtype);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            for (ProductDetailEntity i:productDetailEntities) {
+                merchantSelectService.addMerchants(i);
+            }
             return productDetailEntities;
-        }
-        else if(type==1) {//get all products by suCategory
-            List<ProductDetailEntity> productDetailEntities=null;
+        } else if (type == 1) {//get all products by subCategory
+            List<ProductDetailEntity> productDetailEntities = null;
             String responseUrl = null;
             try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getProductsBySubCategory/"+name);
+                responseUrl = HttpURLConnectionExample.sendGet(IP + "getProductsBySubCategory/" + name);
 
-                productDetailEntities = objectMapper.readValue(responseUrl,listtype);
+                productDetailEntities = objectMapper.readValue(responseUrl, listtype);
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            for (ProductDetailEntity i:productDetailEntities) {
+                merchantSelectService.addMerchants(i);
             }
             return productDetailEntities;
         }
@@ -72,18 +77,15 @@ public class ProductServicesImpl implements ProductServices{
 
     @Override
     public ProductDetailEntity getProductDetails(int productId) {
-        String responseURL=null;
-        ProductDetailEntity responseObj=null;
+        String responseURL = null;
+        ProductDetailEntity responseObj = null;
         try {
-            responseURL = HttpURLConnectionExample.sendGet(IP+"getProductDetailsById/"+String.valueOf(productId));
+            responseURL = HttpURLConnectionExample.sendGet(IP + "getProductDetailsById/" + String.valueOf(productId));
+            responseObj = objectMapper.readValue(responseURL, ProductDetailEntity.class);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        try {
-            responseObj = objectMapper.readValue(responseURL,ProductDetailEntity.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        merchantSelectService.addMerchants(responseObj);
 
         return responseObj;
     }
@@ -91,16 +93,20 @@ public class ProductServicesImpl implements ProductServices{
     @Override
     public List<ProductDetailEntity> getAllProducts() {
         //all  product
-            List<ProductDetailEntity> productDetailEntities=null;
-            String responseUrl = null;
-            try {
-                responseUrl = HttpURLConnectionExample.sendGet(IP+"getAll");
+        List<ProductDetailEntity> productDetailEntities = null;
+        String responseUrl = null;
+        try {
+            responseUrl = HttpURLConnectionExample.sendGet(IP + "getAll");
 
-                productDetailEntities = objectMapper.readValue(responseUrl,listtype);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return productDetailEntities;
+            productDetailEntities = objectMapper.readValue(responseUrl, listtype);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        for (ProductDetailEntity i : productDetailEntities) {
+            merchantSelectService.addMerchants(i);
+        }
+
+        return productDetailEntities;
 
     }
 
@@ -111,8 +117,8 @@ public class ProductServicesImpl implements ProductServices{
 
         try {
             String urlParameters = objectMapper.writeValueAsString(productDetailEntity);
-            responseUrl = HttpURLConnectionExample.sendPost(IP+"insert",urlParameters);
-            productDetailEntitynew = objectMapper.readValue(responseUrl,listtype);
+            responseUrl = HttpURLConnectionExample.sendPost(IP + "insert", urlParameters);
+            productDetailEntitynew = objectMapper.readValue(responseUrl, listtype);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         } catch (Exception e) {
@@ -124,7 +130,7 @@ public class ProductServicesImpl implements ProductServices{
     @Override
     public boolean deleteByProductId(int productId) {
         try {
-            HttpURLConnectionExample.sendGet(IP+"delete/"+String.valueOf(productId));
+            HttpURLConnectionExample.sendGet(IP + "delete/" + String.valueOf(productId));
 
         } catch (Exception e) {
             e.printStackTrace();

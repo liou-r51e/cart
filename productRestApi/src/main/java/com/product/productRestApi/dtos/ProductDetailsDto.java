@@ -1,5 +1,6 @@
 package com.product.productRestApi.dtos;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,22 +13,9 @@ public class ProductDetailsDto {
     private String discription;
     private List<Map> attribute;
     private List<String> images;
+    private List<Integer> cost = new ArrayList<>();
     private List<MerchantDetailsDto> merchantDetailsDtos;
 
-
-    @Override
-    public String toString() {
-        return "ProductDetailsDto{" +
-                "productId=" + productId +
-                ", productName='" + productName + '\'' +
-                ", category='" + category + '\'' +
-                ", subCategory='" + subCategory + '\'' +
-                ", discription='" + discription + '\'' +
-                ", attribute=" + attribute +
-                ", images=" + images +
-                ", merchantDetailsDtos=" + merchantDetailsDtos +
-                '}';
-    }
 
     public int getProductId() {
         return productId;
@@ -91,5 +79,28 @@ public class ProductDetailsDto {
 
     public void setMerchantDetailsDtos(List<MerchantDetailsDto> merchantDetailsDtos) {
         this.merchantDetailsDtos = merchantDetailsDtos;
+    }
+
+    public List<Integer> getCost() {
+        return cost;
+    }
+
+    public void setCost(List<Integer> cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "ProductDetailsDto{" +
+                "productId=" + productId +
+                ", productName='" + productName + '\'' +
+                ", category='" + category + '\'' +
+                ", subCategory='" + subCategory + '\'' +
+                ", discription='" + discription + '\'' +
+                ", attribute=" + attribute +
+                ", images=" + images +
+                ", cost=" + cost +
+                ", merchantDetailsDtos=" + merchantDetailsDtos +
+                '}';
     }
 }
