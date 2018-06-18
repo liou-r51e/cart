@@ -17,7 +17,7 @@ public class ProductEntity {
     private String category;
     private  String subCategory;
     private String discription;
-    private List<Map> attribute;
+    //private List<Map> attribute;
     private List<String> images;
 
     public String getSubCategory() {
@@ -28,13 +28,13 @@ public class ProductEntity {
         this.subCategory = subCategory;
     }
 
-    public List<Map> getAttribute() {
+   /*public List<Map> getAttribute() {
         return attribute;
     }
 
     public void setAttribute(List<Map> attribute) {
         this.attribute = attribute;
-    }
+    }*/
 
     public int getProductId() {
         return productId;
@@ -84,7 +84,7 @@ public class ProductEntity {
                 ", category='" + category + '\'' +
                 ", subCategory='" + subCategory + '\'' +
                 ", discription='" + discription + '\'' +
-                ", attribute=" + attribute +
+                //", attribute=" + attribute +
                 ", images=" + images +
                 '}';
     }

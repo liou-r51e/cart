@@ -1,9 +1,13 @@
 package com.ayu.Product.service.impl;
 
-import com.ayu.Product.dto.ProductDTO;
+import com.ayu.Product.controller.HttpURLConnectionE;
+import com.ayu.Product.dto.ProductSolr;
 import com.ayu.Product.repository.ProductRepository;
 import com.ayu.Product.entity.ProductEntity;
 import com.ayu.Product.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,9 +17,16 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    String IP = "localhost:8983/solr/techproducts/update/json";
+
+
+    JavaType listtype = objectMapper.getTypeFactory().constructCollectionType(List.class,ProductEntity.class);
+
     @Autowired
     ProductRepository productRepository;
-    int count = 0;
+    static int count = 0;
 
     private int getCount(){
         if(count==0){
@@ -61,7 +72,25 @@ public class ProductServiceImpl implements ProductService {
        // List<ProductEntity> productDTOS = productRepository.findAll ();
         productEntity.setProductId (getCount () +1);
         count++;
-        return  productRepository.insert(productEntity);
+        ProductEntity productEntity1 = productRepository.insert(productEntity);
+       /* String responseUrl = null;
+        try {
+
+            ProductSolr productSolr = new ProductSolr ();
+            productSolr.setId ( String.valueOf (productEntity1.getProductId (  ) ));
+            productSolr.setCategory ( productEntity1.getCategory () );
+            productSolr.setSubCategory (productEntity1.getSubCategory ());
+            productSolr.setDiscription ( productEntity1.getDiscription () );
+            productSolr.setProductName ( productEntity1.getProductName () );
+
+            String postString = objectMapper.writeValueAsString ( productSolr );
+            responseUrl = HttpURLConnectionE.sendPost ( IP,"["+postString+"]" );
+        } catch (JsonProcessingException e) {
+            e.printStackTrace ();
+        } catch (Exception e) {
+            e.printStackTrace ();
+        }*/
+        return  productEntity1;
     }
 
 

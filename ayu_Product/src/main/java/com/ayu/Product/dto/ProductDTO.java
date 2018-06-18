@@ -10,7 +10,7 @@ public class ProductDTO {
     private String category;
     private String subCategory;
     private String discription;
-    private List<Map> attribute;
+   // private List<Map> attribute;
     private List<String> images;
 
     public String getSubCategory() {
@@ -53,14 +53,14 @@ public class ProductDTO {
         this.discription = discription;
     }
 
-    public List<Map> getAttribute() {
+  /*  public List<Map> getAttribute() {
         return attribute;
     }
 
     public void setAttribute(List<Map> attribute) {
         this.attribute = attribute;
     }
-
+*/
     public List<String> getImages() {
         return images;
     }
