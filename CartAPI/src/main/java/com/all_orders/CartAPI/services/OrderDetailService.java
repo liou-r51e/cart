@@ -2,6 +2,7 @@ package com.all_orders.CartAPI.services;
 
 import com.all_orders.CartAPI.dto.OrderDetail;
 import com.all_orders.CartAPI.entity.OrderDetailEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,11 +32,11 @@ public interface OrderDetailService {
 
     public OrderDetailEntity getOneByEmailId(String firstName);
 
-    public boolean updateQuantity(int sessionId,int quantity);
+    public boolean updateQuantity(int sessionId, int quantity);
 
-    public boolean updateCost(int sessionId,int quantity);
+    public boolean updateCost(int sessionId, int quantity);
 
-    public boolean updateStatus(int sessionId,String status);
+    public boolean updateStatus(int sessionId, String status);
 
     public int getCost(int sessionId);
 
@@ -43,9 +44,13 @@ public interface OrderDetailService {
 
     public int getQuantity(int sessionID);
 
-    public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId,String status);
+    public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId, String status);
 
     public List<OrderDetailEntity> getOrdersByEmailId(String emailId);
+
+    public Boolean updateOrder(OrderDetail orderDetail);
+
+    public List<OrderDetailEntity> merchantOrders(String merchantId);
 
 
 }

@@ -3,13 +3,12 @@ package com.Kharido.postgresAPI.dto;
 import com.google.common.hash.Hashing;
 
 import java.nio.charset.StandardCharsets;
-//import java.security.MessageDigest;
+
 public class UserDetail {
 
-   // private  String userId;
-    private  String emailId;
-    private  String fullName;
-    private  String password;
+    private String emailId;
+    private String fullName;
+    private String password;
     private String phoneNumber;
     private String address;
 
@@ -37,22 +36,12 @@ public class UserDetail {
         this.fullName = fullName;
     }
 
-    public String getPassword() {
-        //Todo : Phani : remove hashing from get method
-//        final String hashed = Hashing.sha256()
-//                .hashString(password, StandardCharsets.UTF_8)
-//                .toString();
-//
-//        return hashed;
-        return password;
-    }
+    public String getPassword() { return password; }
 
     public void setPassword(String password) {
-        System.out.println(password);
         final String hashed = Hashing.sha256()
                 .hashString(password, StandardCharsets.UTF_8)
                 .toString();
-        //System.out.println(hashed);
         this.password = hashed;
     }
 

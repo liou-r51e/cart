@@ -11,16 +11,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Properties;import java.util.*;
+import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.*;
 import java.util.Random;
+
 
 @Service
 public class UserDetailServiceImpl implements UserDetailsService {
     private static String USER_NAME = "adarsh.spy";  // GMail user name (just the part before "@gmail.com")
     private static String PASSWORD = "hizbolah@4"; // GMail password
-    private static String RECIPIENT ;//"adarsh.spy@gmail.com";
+    private static String RECIPIENT;//"adarsh.spy@gmail.com";
 
     @Autowired
     UserDetailsRepository userDetailsRepository;
@@ -34,19 +35,19 @@ public class UserDetailServiceImpl implements UserDetailsService {
     public UserDetail save(UserDetail userDetail) {
 
         UserDetailsEntity userDetailsEntity = new UserDetailsEntity();
-            BeanUtils.copyProperties(userDetail, userDetailsEntity);
-            userDetailsRepository.save(userDetailsEntity);
-            //Todo : Phani : remove system.out.println
-            System.out.println(userDetailsEntity.getEmailId());
-            //Todo : Phani : what is the need of this code?
-            UserDetail response = new UserDetail();
-            BeanUtils.copyProperties(userDetailsEntity, response);
-            return response;
+        BeanUtils.copyProperties(userDetail, userDetailsEntity);
+        userDetailsRepository.save(userDetailsEntity);
+        //Todo : Phani : remove system.out.println
+        System.out.println(userDetailsEntity.getEmailId());
+        //Todo : Phani : what is the need of this code?
+        UserDetail response = new UserDetail();
+        BeanUtils.copyProperties(userDetailsEntity, response);
+        return response;
     }
 
     @Override
     public boolean exists(String emailId) {
-       return userDetailsRepository.existsById(emailId);
+        return userDetailsRepository.existsById(emailId);
     }
 
     @Override
@@ -84,49 +85,51 @@ public class UserDetailServiceImpl implements UserDetailsService {
         return null;
     }
 
-   @Override
+    @Override
     public UserDetailsEntity getOneByEmailId(String emailId) {
-     UserDetailsEntity userLoginDetailEntity = userDetailsRepository.findById(emailId).get();
+        UserDetailsEntity userLoginDetailEntity = userDetailsRepository.findById(emailId).get();
         return userLoginDetailEntity;
     }
 
     @Override
     public String userLogin(UserLoginDetails userLoginDetails) {
-        if(userDetailsRepository.existsById(userLoginDetails.getEmailId())==false){
+        if (userDetailsRepository.existsById(userLoginDetails.getEmailId()) == false) {
 
             return ("Email is not registered...");
         }
 
-       UserDetailsEntity userLoginDetailEntity = userDetailsRepository.findById(userLoginDetails.getEmailId()).get();
-//        if (userLoginDetailEntity == null) {
-//            //Todo : Phani : remove system.out.println, use logger instead
-//            System.out.println("User Not Found...");
-//            return ("Email is not registered...");
-//        }
+        UserDetailsEntity userLoginDetailEntity = userDetailsRepository.findById(userLoginDetails.getEmailId()).get();
         boolean userPassWordCheck = userLoginDetailEntity.getPassword().equals(userLoginDetails.getPassword());
-        System.out.println(userLoginDetailEntity.getPassword()+"\n"+userLoginDetails.getPassword());
-        if(userPassWordCheck == false)
-        {
+        System.out.println(userLoginDetailEntity.getPassword() + "\n" + userLoginDetails.getPassword());
+        if (userPassWordCheck == false) {
             return ("Username/Password incorrect...");
         }
         return ("true");
 
     }
 
-
+    @Override
+    public Boolean updateAddress(String emailId, String address) {
+        UserDetailsEntity userDetailsEntity = userDetailsRepository.findById(emailId).get();
+        userDetailsEntity.setAddress(address);
+        userDetailsRepository.deleteById(emailId);
+        return userDetailsEntity.equals(userDetailsRepository.save(userDetailsEntity));
+    }
 
     @Override
     public int emailValidation(String emailId) {
 
         Random rand = new Random();
-        int rand_int = rand.nextInt(1000);
+        Random rnd = new Random();
+        int rand_int = 100000 + rnd.nextInt(900000);
         String from = USER_NAME;
         String pass = PASSWORD;
-        String[] to = { emailId }; // list of recipient email addresses
+        String[] to = {emailId}; // list of recipient email addresses
         System.out.println(emailId);
         String subject = "Kharido welcomes you!!";
-        String body = "Welcome to the fastest growing ecommerce website in india. Please verify your email by entering " +
-                "the mentioned OTP in your mobile application!"+"\n OTP : "+rand_int +"\n Regards, \nKharido Team";
+        String body = "Welcome to the fastest growing Ecommerce website in india. Please verify your Email by entering " +
+                "the mentioned OTP in your mobile application!" + "\nOTP : " + rand_int + "\n\nRegards, \nKharido Team" + "\n" +
+                "";
 
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
@@ -145,11 +148,11 @@ public class UserDetailServiceImpl implements UserDetailsService {
             InternetAddress[] toAddress = new InternetAddress[to.length];
 
             // To get the array of addresses
-            for( int i = 0; i < to.length; i++ ) {
+            for (int i = 0; i < to.length; i++) {
                 toAddress[i] = new InternetAddress(to[i]);
             }
 
-            for( int i = 0; i < toAddress.length; i++) {
+            for (int i = 0; i < toAddress.length; i++) {
                 message.addRecipient(Message.RecipientType.TO, toAddress[i]);
             }
 
@@ -159,16 +162,14 @@ public class UserDetailServiceImpl implements UserDetailsService {
             transport.connect(host, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
-        }
-        catch (AddressException ae) {
+        } catch (AddressException ae) {
             ae.printStackTrace();
-        }
-        catch (MessagingException me) {
+        } catch (MessagingException me) {
             me.printStackTrace();
         }
 
-    return  rand_int;
+        return rand_int;
     }
-    }
+}
 
 

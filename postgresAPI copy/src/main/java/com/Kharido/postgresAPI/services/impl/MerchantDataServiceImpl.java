@@ -12,11 +12,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class MerchantDataServiceImpl implements MerchantDataService {
 
-    //save
-    //add product(quantity)
-    //add/decrease stock and produc
-    //get rating
-    //calculating the rating
     @Autowired
     MerchantDataRepository merchantDataRepository;
 
@@ -26,10 +21,8 @@ public class MerchantDataServiceImpl implements MerchantDataService {
         MerchantDetailsEntity merchantDetailsEntity = new MerchantDetailsEntity();
         BeanUtils.copyProperties(merchantData, merchantDetailsEntity);
         merchantDataRepository.save(merchantDetailsEntity);
-        //Todo : Phani : remove system.out.println
-        System.out.println(merchantDetailsEntity.getMerchantId());
-        //Todo : Phani : what is the need of this code?
-        MerchantDetail response = new MerchantDetail();
+         System.out.println(merchantDetailsEntity.getMerchantId());
+         MerchantDetail response = new MerchantDetail();
         BeanUtils.copyProperties(merchantDetailsEntity, response);
         return response;
     }
@@ -39,8 +32,8 @@ public class MerchantDataServiceImpl implements MerchantDataService {
         MerchantDetailsEntity merchantDataEntity = (MerchantDetailsEntity) merchantDataRepository.findById(merchandId).get();
         int numberOfProducts = merchantDataEntity.getNumberProducts();
         merchantDataEntity.setNumberProducts(numberOfProducts + product);
-        merchantDataRepository.deleteById(merchandId);
-        return merchantDataEntity.equals(merchantDataRepository.save(merchantDataEntity));
+       // merchantDataRepository.deleteById(merchandId);
+        return merchantDataEntity.getNumberProducts() == merchantDataRepository.save(merchantDataEntity).getNumberProducts();
 
     }
 
@@ -49,8 +42,8 @@ public class MerchantDataServiceImpl implements MerchantDataService {
         MerchantDetailsEntity merchantDataEntity = (MerchantDetailsEntity) merchantDataRepository.findById(merchandId).get();
         int numberOfProducts = merchantDataEntity.getNumberProducts();
         merchantDataEntity.setNumberProducts(numberOfProducts - product);
-        merchantDataRepository.deleteById(merchandId);
-        return merchantDataEntity.equals(merchantDataRepository.save(merchantDataEntity));
+    //    merchantDataRepository.deleteById(merchandId);
+        return merchantDataEntity.getNumberProducts() == merchantDataRepository.save(merchantDataEntity).getNumberProducts();
 
     }
 
@@ -58,9 +51,9 @@ public class MerchantDataServiceImpl implements MerchantDataService {
     public boolean addStock(String merchandId, int stock) {
         MerchantDetailsEntity merchantDataEntity = (MerchantDetailsEntity) merchantDataRepository.findById(merchandId).get();
         int numberOfStocks = merchantDataEntity.getStock();
-        merchantDataEntity.setNumberProducts(numberOfStocks + stock);
-        merchantDataRepository.deleteById(merchandId);
-        return merchantDataEntity.equals(merchantDataRepository.save(merchantDataEntity));
+        merchantDataEntity.setStock(numberOfStocks + stock);
+    //    merchantDataRepository.deleteById(merchandId);
+        return merchantDataEntity.getStock() == merchantDataRepository.save(merchantDataEntity).getStock();
 
     }
 
@@ -68,16 +61,25 @@ public class MerchantDataServiceImpl implements MerchantDataService {
     public boolean decreaseStock(String merchandId, int stock) {
         MerchantDetailsEntity merchantDataEntity = (MerchantDetailsEntity) merchantDataRepository.findById(merchandId).get();
         int numberOfStocks = merchantDataEntity.getStock();
-        merchantDataEntity.setNumberProducts(numberOfStocks - stock);
-        merchantDataRepository.deleteById(merchandId);
-        return merchantDataEntity.equals(merchantDataRepository.save(merchantDataEntity));
+        merchantDataEntity.setStock(numberOfStocks - stock);
+     //   merchantDataRepository.deleteById(merchandId);
+        return merchantDataEntity.getStock() == merchantDataRepository.save(merchantDataEntity).getStock();
 
     }
 
+    //    @Override
+//    public MerchantDetailsEntity getOne(String merchantId) {
+//        MerchantDetailsEntity merchantDataEntity = merchantDataRepository.findById(merchantId).get();
+//        return merchantDataEntity;
+//    }
     @Override
-    public MerchantDetailsEntity getOne(String merchantId) {
-        MerchantDetailsEntity merchantDataEntity = merchantDataRepository.findById(merchantId).get();
-        return merchantDataEntity;
+    public boolean addSold(String merchandId, int sold) {
+        MerchantDetailsEntity merchantDataEntity = (MerchantDetailsEntity) merchantDataRepository.findById(merchandId).get();
+        int numberOfStocks = merchantDataEntity.getSold();
+        merchantDataEntity.setSold(numberOfStocks + sold);
+      //  merchantDataRepository.deleteById(merchandId);
+        return merchantDataEntity.getSold() == merchantDataRepository.save(merchantDataEntity).getSold();
+
     }
 
     @Override
@@ -96,14 +98,42 @@ public class MerchantDataServiceImpl implements MerchantDataService {
     @Override
     public Double getRating(String merchantId) {
         MerchantDetailsEntity merchantDataEntity = merchantDataRepository.findById(merchantId).get();
-        return merchantDataEntity.getRating();
+        return new Double(merchantDataEntity.getRating());
     }
 
     @Override
-    public int getNumberOfRatings(String merchantId){
+    public boolean setRating(String merchantId, double rating) {
+        MerchantDetailsEntity merchantDataEntity = merchantDataRepository.findById(merchantId).get();
+        merchantDataEntity.setRating(String.valueOf(rating));
+    //    merchantDataRepository.deleteById(merchantId);
+        return merchantDataEntity.getRating() == merchantDataRepository.save(merchantDataEntity).getRating();
+
+    }
+
+    @Override
+    public int getNumberOfRatings(String merchantId) {
         MerchantDetailsEntity merchantDataEntity = merchantDataRepository.findById(merchantId).get();
         return merchantDataEntity.getNumberRatings();
     }
 
+    @Override
+    public boolean setNumberOfRatings(String merchantId, int numberRating) {
+        MerchantDetailsEntity merchantDataEntity = merchantDataRepository.findById(merchantId).get();
+        merchantDataEntity.setNumberRatings(numberRating);
+    //    merchantDataRepository.deleteById(merchantId);
+        return merchantDataEntity.getNumberRatings() == merchantDataRepository.save(merchantDataEntity).getNumberRatings();
 
+
+    }
+
+    @Override
+    public boolean addReview(String merchandId, int ratingNew) {
+        double pastRating = getRating(merchandId);
+        int pastNumberRating = getNumberOfRatings(merchandId);
+        double newRating = (pastRating * pastNumberRating + ratingNew) / (pastNumberRating + 1);
+        boolean checkSave = true;
+        checkSave &= setRating(merchandId, newRating);
+        checkSave &= setNumberOfRatings(merchandId, pastNumberRating + 1);
+        return checkSave;
+    }
 }

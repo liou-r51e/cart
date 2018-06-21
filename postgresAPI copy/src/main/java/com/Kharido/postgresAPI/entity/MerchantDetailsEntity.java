@@ -13,13 +13,12 @@ public class MerchantDetailsEntity {
     public static final String TABLE_NAME = "merchantDetails";
     private static final String ID_COLUMN = "merchantId";
 
-
     @Id
     @Column(name = MerchantDetailsEntity.ID_COLUMN)
 
     private String merchantId;
     private String password;
-    private String fullName;
+    private String merchantName;
     private String phoneNumber;
     private String address;
     private String storeAddress;
@@ -63,12 +62,12 @@ public class MerchantDetailsEntity {
         this.password = password;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getMerchantName() {
+        return merchantName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 
     public String getPhoneNumber() {
@@ -111,12 +110,12 @@ public class MerchantDetailsEntity {
         this.numberProducts = numberProducts;
     }
 
-    public double getRating() {
-        return new Double(rating);
+    public String getRating() {
+        return rating;
     }
 
-    public void setRating(double rating) {
-        this.rating = String.valueOf(rating);
+    public void setRating(String rating) {
+        this.rating = rating;
     }
 
     public int getNumberRatings() {
@@ -132,7 +131,7 @@ public class MerchantDetailsEntity {
         return "MerchantDetailsEntity{" +
                 "merchantId='" + merchantId + '\'' +
                 ", password='" + password + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", merchantName='" + merchantName + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +

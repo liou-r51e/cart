@@ -3,9 +3,11 @@ package com.Kharido.postgresAPI.services;
 import com.Kharido.postgresAPI.dto.UserDetail;
 import com.Kharido.postgresAPI.dto.UserLoginDetails;
 import com.Kharido.postgresAPI.entity.UserDetailsEntity;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 public interface UserDetailsService {
 
@@ -34,6 +36,8 @@ public interface UserDetailsService {
     public String userLogin(UserLoginDetails userDetail);
 
     public int emailValidation(String emailId);
+
+    public Boolean updateAddress(String emailId, String address);
 
     //public List<UserLoginDetailEntity> getByFirstNameAndLastName(String firstName, String lastName);
 }

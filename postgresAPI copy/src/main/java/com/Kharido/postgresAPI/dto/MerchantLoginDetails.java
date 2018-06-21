@@ -17,12 +17,14 @@ public class MerchantLoginDetails {
         this.merchantId = merchantId;
     }
 
-    public String getPassword() {return password;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword(String password) {final String hashed = Hashing.sha256()
-            .hashString(password, StandardCharsets.UTF_8)
-            .toString();
+    public void setPassword(String password) {
+        final String hashed = Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
         this.password = hashed;
     }
 

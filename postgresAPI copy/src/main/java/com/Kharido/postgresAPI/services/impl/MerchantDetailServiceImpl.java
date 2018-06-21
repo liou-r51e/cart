@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+
 @Service
 public class MerchantDetailServiceImpl implements MerchantDetailsService {
 
@@ -27,6 +28,11 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
     @Override
     public MerchantDetail save(MerchantDetail merchantDetail) {
         MerchantDetailsEntity merchantDetailsEntity = new MerchantDetailsEntity();
+        merchantDetail.setNumberProducts(0);
+        merchantDetail.setNumberRatings(0);
+        merchantDetail.setRating("3.5");
+        merchantDetail.setSold(0);
+        merchantDetail.setStock(0);
         BeanUtils.copyProperties(merchantDetail, merchantDetailsEntity);
         merchantDetailsRepository.save(merchantDetailsEntity);
         System.out.println(merchantDetailsEntity.getMerchantId());
@@ -70,10 +76,10 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
 
     }
 
-    @Override
-    public List<MerchantDetailsEntity> getByFirstName(String fullName) {
-        return null;
-    }
+    //  @Override
+//    public List<MerchantDetailsEntity> getByFirstName(String fullName) {
+//        return null;
+//    }
 
     @Override
     public MerchantDetailsEntity getOneByMerchantId(String merchantId) {
@@ -83,21 +89,20 @@ public class MerchantDetailServiceImpl implements MerchantDetailsService {
 
     @Override
     public String merchantLogin(MerchantLoginDetails merchantLoginDetails) {
-        if(merchantDetailsRepository.existsById(merchantLoginDetails.getMerchantId())==false){
+        if (merchantDetailsRepository.existsById(merchantLoginDetails.getMerchantId()) == false) {
 
-            return ("Email is not registered...");
+            return ("Email is not registered !!");
         }
 
         MerchantDetailsEntity merchantDetailsEntity = merchantDetailsRepository.findById(merchantLoginDetails.getMerchantId()).get();
-        if (merchantDetailsEntity == null) {
-            //Todo : Phani : remove system.out.println, use logger instead
-            System.out.println("User Not Found...");
-            return ("Email is not registered...");
-        }
+//        if (merchantDetailsEntity == null) {
+//            //Todo : Phani : remove system.out.println, use logger instead
+//            System.out.println("User Not Found...");
+//            return ("Email is not registered...");
+//        }
         boolean merchantPassWordCheck = merchantDetailsEntity.getPassword().equals(merchantLoginDetails.getPassword());
-        if(merchantPassWordCheck == false)
-        {
-            return ("Username/Password incorrect...");
+        if (merchantPassWordCheck == false) {
+            return ("Username/Password incorrect !!");
         }
         return ("true");
 

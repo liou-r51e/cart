@@ -1,18 +1,12 @@
 package com.Kharido.postgresAPI.services;
 
 import com.Kharido.postgresAPI.dto.MerchantDetail;
-import com.Kharido.postgresAPI.entity.MerchantDetailsEntity;
+import org.springframework.stereotype.Service;
+
 
 public interface MerchantDataService {
 
-    //save
-    //add product(quantity)
-    //add/decrease stock and produc
-    //getrating
-    //calculating the rating
-
     public MerchantDetail save(MerchantDetail merchantDetail);
-
 
     public boolean addStock(String merchandId, int stock);
 
@@ -26,10 +20,18 @@ public interface MerchantDataService {
 
     public int getStock(String merchantId);
 
-    public MerchantDetailsEntity getOne(String merchantId);
+    // public MerchantDetailsEntity getOne(String merchantId);
 
     public Double getRating(String merchantId);
 
     public int getNumberOfRatings(String merchantId);
+
+    public boolean addSold(String merchandId, int sold);
+
+    public boolean addReview(String merchandId, int ratingNew);
+
+    public boolean setRating(String merchantId, double rating);
+
+    public boolean setNumberOfRatings(String merchantId, int numberRatings);
 
 }

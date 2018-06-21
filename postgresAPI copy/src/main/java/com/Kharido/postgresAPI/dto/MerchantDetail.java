@@ -6,18 +6,16 @@ import java.nio.charset.StandardCharsets;
 
 public class MerchantDetail {
 
-
-    // private  String userId;
-    private  String merchantId;
-    private  String fullName;
-    private  String password;
+    private String merchantId;
+    private String merchantName;
+    private String password;
     private String phoneNumber;
     private String storeAddress;
-    private  String address;
+    private String address;
     private int stock;
     private int sold;
     private int numberProducts;
-    private double rating;
+    private String rating;
     private int numberRatings;
 
     public String getMerchantId() {
@@ -28,26 +26,24 @@ public class MerchantDetail {
         this.merchantId = merchantId;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getMerchantName() {
+        return merchantName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setMerchantName(String merchantName) {
+        this.merchantName = merchantName;
     }
 
-    public String getPassword() {final String hashed = Hashing.sha256()
-            .hashString(password, StandardCharsets.UTF_8)
-            .toString();
-
-        return hashed;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPassword(String password) {final String hashed = Hashing.sha256()
-            .hashString(password, StandardCharsets.UTF_8)
-            .toString();
+    public void setPassword(String password) {
+        final String hashed = Hashing.sha256()
+                .hashString(password, StandardCharsets.UTF_8)
+                .toString();
 
-        this.password=password;
+        this.password = password;
     }
 
     public String getPhoneNumber() {
@@ -98,11 +94,11 @@ public class MerchantDetail {
         this.numberProducts = numberProducts;
     }
 
-    public double getRating() {
+    public String getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(String rating) {
         this.rating = rating;
     }
 
@@ -118,7 +114,7 @@ public class MerchantDetail {
     public String toString() {
         return "MerchantDetail{" +
                 "merchantId='" + merchantId + '\'' +
-                ", fullName='" + fullName + '\'' +
+                ", merchantName='" + merchantName + '\'' +
                 ", password='" + password + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", storeAddress='" + storeAddress + '\'' +

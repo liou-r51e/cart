@@ -14,15 +14,14 @@ import java.util.Optional;
 @Service
 public class OrderDetailServiceImpl implements OrderDetailService {
 
-@Autowired
-OrderRepository orderRepository;
+    @Autowired
+    OrderRepository orderRepository;
 
 
-    static int sessionCount=0;
-
-    int getSessionCount(){
-        if(sessionCount==0){
-            sessionCount=((List)orderRepository.findAll()).size();
+    static int sessionCount = 0;
+    int getSessionCount() {
+        if (sessionCount == 0) {
+            sessionCount = ((List) orderRepository.findAll()).size();
         }
         return sessionCount;
     }
@@ -37,7 +36,7 @@ OrderRepository orderRepository;
 
         OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
         BeanUtils.copyProperties(orderDetail, orderDetailEntity);
-        orderDetailEntity.setSessionId(getSessionCount()+1);
+        orderDetailEntity.setSessionId(getSessionCount() + 1);
         sessionCount++;
         orderRepository.save(orderDetailEntity);
         System.out.println(orderDetailEntity.getSessionId());
@@ -53,7 +52,7 @@ OrderRepository orderRepository;
 
     @Override
     public List<OrderDetailEntity> findAll() {
-        return (List)orderRepository.findAll();
+        return (List) orderRepository.findAll();
     }
 
     @Override
@@ -92,31 +91,37 @@ OrderRepository orderRepository;
     }
 
     @Override
-    public boolean updateQuantity(int sessionId,int quantity)
-    {
-        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
+    public boolean updateQuantity(int sessionId, int quantity) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findBySessionId(sessionId);
         orderDetailEntity.setQuantity(quantity);
-        orderRepository.deleteById(String.valueOf(sessionId));
+        //orderRepository.deleteById(String.valueOf(sessionId));
         return orderDetailEntity.equals(orderRepository.save(orderDetailEntity));
     }
 
     @Override
-    public boolean updateCost(int sessionId,int cost)
-    {
-        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
+    public boolean updateCost(int sessionId, int cost) {
+        OrderDetailEntity orderDetailEntity = orderRepository.findBySessionId(sessionId);
         orderDetailEntity.setCost(cost);
-        orderRepository.deleteById(String.valueOf(sessionId));
+        //orderRepository.deleteById(String.valueOf(sessionId));
         return orderDetailEntity.equals(orderRepository.save(orderDetailEntity));
     }
 
     @Override
     public boolean updateStatus(int sessionId, String status) {
-
-        OrderDetailEntity orderDetailEntity = orderRepository.findById(String.valueOf(sessionId)).get();
+        OrderDetailEntity orderDetailEntity = orderRepository.findBySessionId(sessionId);
         orderDetailEntity.setStatus(status);
-        orderRepository.deleteById(String.valueOf(sessionId));
+        //orderRepository.deleteBySessionId(sessionId);
         return orderDetailEntity.equals(orderRepository.save(orderDetailEntity));
 
+    }
+
+    @Override
+    public Boolean updateOrder(OrderDetail orderDetail) {
+        OrderDetailEntity orderDetailEntity = new OrderDetailEntity();
+        BeanUtils.copyProperties(orderDetail, orderDetailEntity);
+        orderRepository.deleteBySessionId(orderDetail.getSessionId());
+        orderRepository.save(orderDetailEntity);
+        return true;
     }
 
     @Override
@@ -138,17 +143,21 @@ OrderRepository orderRepository;
     }
 
     @Override
-    public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId,String status){
-            List<OrderDetailEntity> orderDetailEntities = orderRepository.findByEmailIdAndStatus(emailId,status);
-            return  orderDetailEntities;
+    public List<OrderDetailEntity> getByEmailIdAndStatus(String emailId, String status) {
+        List<OrderDetailEntity> orderDetailEntities = orderRepository.findByEmailIdAndStatus(emailId, status);
+        return orderDetailEntities;
 
     }
 
     @Override
     public List<OrderDetailEntity> getOrdersByEmailId(String emailId) {
-        List<OrderDetailEntity> orderDetailEntities = (List<OrderDetailEntity>) orderRepository.findById(emailId).get();
-        return  orderDetailEntities;
+        List<OrderDetailEntity> orderDetailEntities = (List<OrderDetailEntity>) orderRepository.findByEmailId(emailId);
+        return orderDetailEntities;
     }
 
-
+    @Override
+    public List<OrderDetailEntity> merchantOrders(String merchantId) {
+        List<OrderDetailEntity> orderDetailServices = (List<OrderDetailEntity>) orderRepository.findByMerchantId(merchantId);
+        return orderDetailServices;
+    }
 }
