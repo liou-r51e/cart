@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -73,11 +74,13 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setProductId (getCount () +1);
         count++;
         ProductEntity productEntity1 = productRepository.insert(productEntity);
-       /* String responseUrl = null;
+    /*   String responseUrl = null;
         try {
 
             ProductSolr productSolr = new ProductSolr ();
             productSolr.setId ( String.valueOf (productEntity1.getProductId (  ) ));
+            productSolr.setProductId ( productEntity1.getProductId () );
+            productSolr.setImages ( productEntity1.getImages ());
             productSolr.setCategory ( productEntity1.getCategory () );
             productSolr.setSubCategory (productEntity1.getSubCategory ());
             productSolr.setDiscription ( productEntity1.getDiscription () );
@@ -96,6 +99,16 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteAll(){
         productRepository.deleteAll();
+    }
+
+    @Override
+    public List<ProductEntity> insertAll(List<ProductEntity> productEntities) {
+        List<ProductEntity> productEntitiesNew = new ArrayList<> (  );
+        for (ProductEntity productEntity:productEntities) {
+            productEntitiesNew.add(insert ( productEntity ));
+
+        }
+        return productEntitiesNew;
     }
 
 
